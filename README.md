@@ -28,8 +28,8 @@
 
 ```powershell
 git lfs install
-git clone https://github.com/cw101-lab/chuangye001.git
-cd chuangye001
+git clone https://github.com/callsign-bowen/xinqing.git
+cd xinqing
 git lfs pull
 npm ci
 Copy-Item account-service/.env.example account-service/.env
