@@ -1,0 +1,34 @@
+.ai-header:has(.ai-3d-button) { position: relative; }
+.ai-3d-button { margin-left: auto; min-width: 48px; min-height: 32px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 18px; color: var(--text); background: var(--bg); font: inherit; font-size: 14px; }
+.ai-3d-button[aria-expanded='true'] { background: var(--soft); }
+.ai-3d-picker { position: absolute; z-index: 20; top: calc(100% + 4px); right: 0; left: 0; padding: 16px; border: 1px solid var(--line); border-radius: 20px; background: var(--bg); box-shadow: 0 12px 32px #0002; }
+.ai-3d-picker-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-bottom: 10px; }
+.ai-3d-picker-heading strong { font-size: 15px; font-weight: 500; }
+.ai-3d-picker-heading > button { width: 32px; height: 32px; border: 0; border-radius: 50%; color: var(--text); background: var(--soft); font-size: 22px; }
+.ai-3d-choices { display: grid; gap: 6px; }
+.ai-3d-choices > button { display: flex; flex-direction: column; gap: 5px; width: 100%; padding: 11px 12px; border: 1px solid transparent; border-radius: 12px; background: transparent; color: var(--text); text-align: left; font: inherit; }
+.ai-3d-choices > button:hover, .ai-3d-choices > button[aria-pressed='true'] { border-color: var(--line); background: var(--soft); }
+.ai-3d-choices strong { font-size: 14px; font-weight: 500; }
+.ai-3d-choices span { color: var(--muted); font-size: 14px; line-height: 1.6; }
+.ai-scene-window { position: relative; flex: 0 0 auto; margin-top: 6px; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; color: var(--text); background: var(--bg); }
+.ai-scene-window-bar { display: flex; align-items: center; justify-content: space-between; min-height: 38px; gap: 8px; padding: 5px 8px 5px 12px; background: var(--soft); }
+.ai-scene-window-bar > strong { font-size: 13px; font-weight: 500; }
+.ai-scene-window-bar > div { display: flex; gap: 3px; }
+.ai-scene-window-bar button { min-width: 30px; min-height: 30px; padding: 4px 7px; border: 0; border-radius: 12px; background: transparent; color: var(--muted); font: inherit; font-size: 12px; }
+.ai-scene-window-bar button:disabled { opacity: .45; }
+.ai-scene-window-bar button:hover { background: var(--bg); }
+.ai-scene-viewport { position: relative; width: 100%; height: clamp(144px, 28dvh, 260px); background: var(--soft); }
+.ai-scene-frame { display: block; width: 100%; height: 100%; border: 0; }
+.ai-scene-speech { position: absolute; z-index: 2; top: 10px; right: 10px; width: min(46%, 310px); max-height: calc(100% - 20px); padding: 11px 13px; border: 1px solid color-mix(in srgb, var(--line) 80%, transparent); border-radius: 16px; background: color-mix(in srgb, var(--bg-card) 94%, transparent); color: var(--text); box-shadow: 0 4px 18px #0002; backdrop-filter: blur(12px); }
+.ai-scene-speech[data-side='left'] { right: auto; left: 10px; }
+.ai-scene-speaker { display: block; margin-bottom: 5px; font-size: 12px; font-weight: 500; color: var(--muted); }
+.ai-scene-speech-text { max-height: min(170px, calc(28dvh - 80px)); min-height: 24px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 16px; line-height: 1.65; scrollbar-width: thin; overscroll-behavior: contain; }
+.ai-scene-speech[data-state='thinking'] .ai-scene-speech-text { color: var(--muted); }
+.ai-scene-hint { position: absolute; z-index: 1; bottom: 9px; left: 10px; padding: 5px 9px; border-radius: 12px; background: #101a24ad; color: #fff; font-size: 12px; pointer-events: none; }
+.ai-scene-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 20px; background: var(--bg); color: var(--muted); font-size: 13px; text-align: center; }
+.ai-scene-loading button { padding: 7px 12px; border: 1px solid var(--line); border-radius: 15px; background: var(--soft); color: var(--text); font: inherit; }
+.ai-3d-picker[hidden], .ai-scene-window[hidden], .ai-scene-window [hidden] { display: none !important; }
+.ai-3d-button:focus-visible, .ai-3d-picker button:focus-visible, .ai-scene-window button:focus-visible { outline: 2px solid var(--primary, #75957d); outline-offset: 2px; }
+@media (max-height: 570px) { .ai-scene-viewport { height: 125px; }.ai-3d-picker { max-height: 65dvh; overflow-y: auto; } }
+@media (max-width: 460px) { .ai-scene-window-bar { flex-wrap: wrap; gap: 2px; }.ai-scene-window-bar > div { margin-left: auto; }.ai-scene-speech { width: 48%; padding: 8px 10px; }.ai-scene-speaker { font-size: 12px; }.ai-scene-hint { max-width: 46%; font-size: 11px; } }
+@media (max-height: 570px) { .ai-scene-speech-text { max-height: 60px; }.ai-scene-hint { display: none; } }

@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "1.0.0",
+  "id": "XXX-000",
+  "version": "1.0.0",
+  "status": "draft",
+  "category": {
+    "code": "FAM",
+    "name": "家庭",
+    "subcategory": "子类名称",
+    "priority": "P0"
+  },
+  "basic": {
+    "title": "情景标题（4–12 字）",
+    "oneLine": "一句话说清用户想练成什么，不要写成口号。",
+    "context": "2–4 句背景：谁、在哪、刚发生了什么、用户现在卡在哪。只写具体事实，不写心理分析。",
+    "difficultyDefault": "realistic",
+    "difficulties": ["gentle", "realistic", "tough"],
+    "durationMinutes": [3, 5, 10],
+    "tags": ["标签一", "标签二"],
+    "locale": "zh-CN"
+  },
+  "counterpart": {
+    "role": "对方的身份，如妈妈 / 直属领导",
+    "relation": "你和对方的关系，如母女",
+    "ageBand": "50-59",
+    "powerDistance": "谁权力更高、凭什么",
+    "setting": "具体到地点和时刻，不要写“日常生活中”",
+    "userRole": "用户在这个场景里的身份和处境"
+  },
+  "persona": {
+    "traits": ["性格一", "性格二"],
+    "surfaceWant": "对方嘴上要的是什么。",
+    "underlyingNeed": "对方真正担心或需要的是什么，允许和表面不一致。",
+    "fears": ["怕什么"],
+    "triggers": ["什么话会让对方更用力"],
+    "coolDowns": ["什么话会让对方松一点"]
+  },
+  "voice": {
+    "register": "语体：家常口语 / 职场书面语 / 客服话术",
+    "sentenceStyle": "句子长短、习惯、节奏",
+    "verbalTics": ["口头禅"],
+    "forbidden": ["辱骂", "威胁", "拿病或死施压"],
+    "sampleLines": ["一句对方可能说的话。"]
+  },
+  "opening": {
+    "scene": "开场那一两秒的画面和对方的第一句话。",
+    "stakes": "用户为什么不敢直说：怕什么后果。",
+    "userGoalDefault": "默认想练成的一句话级目标",
+    "openings": {
+      "gentle": "温和档的开场白。",
+      "realistic": "真实档的开场白。",
+      "tough": "难缠档的开场白，允许施压但不辱骂。"
+    },
+    "styleNotes": {
+      "gentle": "温和档对方会怎么做。",
+      "realistic": "真实档对方会怎么做。",
+      "tough": "难缠档对方会怎么做，边界在哪。"
+    }
+  },
+  "dialogue": {
+    "format": "counterpart 是对方的话，user_stand_in 是替身示例；示例不是唯一答案。",
+    "turns": [
+      { "turn": 1, "speaker": "counterpart", "text": "对方的第一句。", "emotion": "试探", "intensity": 2 },
+      { "turn": 2, "speaker": "user_stand_in", "text": "替身示例：先接住，再说自己。", "emotion": "稳住", "intensity": 2, "strategy": "S1" },
+      { "turn": 3, "speaker": "counterpart", "text": "对方追一句。", "emotion": "追问", "intensity": 3 },
+      { "turn": 4, "speaker": "user_stand_in", "text": "替身示例：给一个具体请求或边界。", "emotion": "说清立场", "intensity": 3, "strategy": "S2" }
+    ]
+  },
+  "branches": [
+    {
+      "id": "B1",
+      "afterTurn": 2,
+      "trigger": "替身开始讲道理",
+      "condition": "替身连续两句在解释原因，对方接不上话。",
+      "leadsTo": "deescalate",
+      "hint": "把理由压成一条，留一句话给对方接。"
+    }
+  ],
+  "emotionalState": {
+    "scale": "1-5",
+    "start": { "label": "着急", "valence": -2, "arousal": 3 },
+    "arc": [
+      { "label": "压着", "valence": -2, "arousal": 3, "atTurn": 2 }
+    ],
+    "end": { "label": "松一点", "valence": -1, "arousal": 2 },
+    "deescalation": "写清怎么把情绪降下来：先接哪一句，再落到什么具体事上。"
+  },
+  "conflict": {
+    "scale": "1-5",
+    "initial": 2,
+    "peak": 4,
+    "escalators": ["替身说“你别管”"],
+    "deescalators": ["替身先接一句对方的担心"],
+    "hardLimit": "不出现辱骂、威胁、暴力细节；不模拟创伤现场。"
+  },
+  "strategies": [
+    {
+      "id": "S1",
+      "name": "接住 + 说事实",
+      "when": "对方刚开始施压，还没把话说死。",
+      "example": "示例句，口语，能直接说出口。",
+      "avoid": "不要一上来反驳或解释太多。",
+      "intensity": "soft"
+    },
+    {
+      "id": "S2",
+      "name": "边界 + 替代",
+      "when": "对方越界或逼当场表态。",
+      "example": "示例句：这个我接不了，但我可以先把手上这部分收尾。",
+      "avoid": "不要赌气、不要威胁。",
+      "intensity": "firm"
+    }
+  ],
+  "safety": {
+    "exitConditions": [
+      "用户说想停或想换话题",
+      "出现自伤、他伤、暴力表述",
+      "对话开始出现辱骂或人身威胁"
+    ],
+    "stopSignals": ["我不想活了", "他打我了"],
+    "hardStop": ["正在发生的暴力或人身威胁", "自伤计划"],
+    "route": "high_risk_protocol",
+    "exitLine": "这句话我不接。咱们先停一下——你现在安全吗？",
+    "afterExit": "跳出替身，回到诺；先确认当下安全，再给求助渠道。不分析、不评价、不劝和。"
+  },
+  "sources": {
+    "origin": "original",
+    "sourceIds": [],
+    "license": "internal-owned",
+    "licenseClass": "commercial_ok",
+    "attribution": "心晴项目组原创",
+    "collectedAt": "2026-11-14",
+    "notes": "如引用外部资源，必须先在 REFERENCE_LIBRARY 登记，并把 sourceIds 填上。"
+  },
+  "review": {
+    "status": "draft",
+    "checklist": {
+      "safety": "pending",
+      "license": "pending",
+      "language": "pending",
+      "realism": "pending",
+      "bias": "pending"
+    },
+    "reviewers": [
+      { "name": "作者名", "role": "author", "at": "2026-11-14" }
+    ],
+    "nextReviewAt": null,
+    "notes": []
+  },
+  "usage": {
+    "surfaces": ["scenario_chat"],
+    "promptHints": [
+      "写 1–3 条给生成模型的分寸提示，不要写具体台词。"
+    ],
+    "retrieval": {
+      "keys": ["category", "subcategory", "intensity", "strategy"],
+      "embedding": false
+    }
+  }
+}

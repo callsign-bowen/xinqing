@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://xinqing.local/corpus/schemas/corpus-index.schema.json",
+  "title": "心晴 · 情景语料库总索引",
+  "description": "8 大类 × 8 个基础情景 = 64 个编号位。只登记分类、编号与状态，不包含情景内容。v1.0.0。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "corpus", "licenseClasses", "categories", "notes"],
+  "properties": {
+    "schemaVersion": { "const": "1.0.0" },
+    "corpus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "updatedAt", "totalSlots", "approvedCount", "draftCount"],
+      "properties": {
+        "name": { "type": "string", "minLength": 4, "maxLength": 60 },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "updatedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "totalSlots": { "const": 64 },
+        "approvedCount": { "type": "integer", "minimum": 0 },
+        "draftCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "licenseClasses": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["commercial_ok", "research_only", "restricted"] }
+    },
+    "categories": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "order", "name", "dir", "description", "slots"],
+        "properties": {
+          "code": { "type": "string", "enum": ["FAM", "WRK", "REL", "FRD", "SELF", "CNS", "CARE", "DIG"] },
+          "order": { "type": "integer", "minimum": 1, "maximum": 8 },
+          "name": { "type": "string", "minLength": 2, "maxLength": 10 },
+          "dir": { "type": "string", "pattern": "^ORIGINAL_CORPUS/[A-Z]{3,4}$" },
+          "description": { "type": "string", "minLength": 8, "maxLength": 200 },
+          "slots": {
+            "type": "array",
+            "minItems": 8,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["id", "seq", "subcategory", "workingTitle", "priority", "risk", "status", "file"],
+              "properties": {
+                "id": { "type": "string", "pattern": "^[A-Z]{3,4}-\\d{3}$" },
+                "seq": { "type": "integer", "minimum": 1, "maximum": 8 },
+                "subcategory": { "type": "string", "minLength": 1, "maxLength": 20 },
+                "workingTitle": { "type": "string", "minLength": 2, "maxLength": 30 },
+                "priority": { "type": "string", "enum": ["P0", "P1", "P2"] },
+                "risk": { "type": "string", "enum": ["low", "medium", "high"] },
+                "status": {
+                  "type": "string",
+                  "enum": ["reserved", "outline", "draft", "in_review", "approved", "blocked"]
+                },
+                "file": { "type": ["string", "null"], "maxLength": 200 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "notes": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 4, "maxLength": 300 } }
+  }
+}

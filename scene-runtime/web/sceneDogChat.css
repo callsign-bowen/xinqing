@@ -1,0 +1,38 @@
+.dog-chat-layer{--dog-safe-bottom:env(safe-area-inset-bottom,0px);position:absolute;inset:0;z-index:30;pointer-events:none;overflow:hidden;color:#65513f;font:14px/1.65 "Segoe UI","Microsoft YaHei",sans-serif;text-align:left;isolation:isolate}
+.dog-chat-layer[hidden],.dog-chat-layer [hidden]{display:none!important}
+.dog-chat-layer *{box-sizing:border-box}
+.dog-chat-layer button{font:inherit;cursor:pointer;color:inherit;touch-action:manipulation}
+.dog-chat-layer button:focus-visible,.dog-chat-layer textarea:focus-visible{outline:2px solid #ad9972;outline-offset:3px}
+.dog-chat-layer svg{width:20px;height:20px;display:block}
+.dog-chat-bubble,.dog-chat-dock,.dog-chat-history{position:absolute;pointer-events:auto;box-shadow:0 8px 30px #4a40211a}
+.dog-chat-bubble{padding:11px 16px 15px;background:#fffdf5f5;border:1px solid #fffdf2;border-radius:25px;max-width:calc(100% - 24px);z-index:1}
+.dog-chat-bubble:after{content:"";display:none;position:absolute;left:var(--dog-tail-left,50%);bottom:-12px;width:22px;height:22px;background:#fffdf5;border-radius:0 0 19px 0;transform:skewY(-28deg);z-index:-1}
+.dog-chat-bubble[data-tail=true]:after{display:block}
+.dog-chat-bubble header,.dog-chat-history header{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:#9b8768;margin:0 0 3px;padding:0;background:none}
+.dog-chat-close,.dog-chat-history header button{display:grid;place-items:center;width:30px;height:30px;padding:4px;border:0;border-radius:50%;background:transparent;min-height:0}
+.dog-chat-close:hover,.dog-chat-history header button:hover{background:#eae0c750}
+.dog-chat-reply{font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;line-height:1.8;max-height:170px}
+.dog-chat-thinking{font-size:26px;line-height:1.2;letter-spacing:5px;color:#aa966d;animation:dog-chat-think 1.4s ease-in-out infinite}
+.dog-chat-resources{font-size:12px;max-height:65px;overflow:auto}.dog-chat-resources a{display:block;color:#81724c;padding-top:7px}
+.dog-chat-dock{padding:10px 12px 7px;background:#fffdf3ed;border:1px solid #fffdf5;border-radius:25px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.dog-chat-dock form{display:flex;align-items:center;gap:7px;margin:0;padding:0;border:0;background:none}
+.dog-chat-dock textarea{flex:1;min-width:0;min-height:42px;max-height:88px;width:100%;padding:10px 8px;border:0;outline:0;resize:none;font:16px/1.45 "Segoe UI","Microsoft YaHei",sans-serif;color:#65513f;background:transparent;box-shadow:none;border-radius:12px}
+.dog-chat-dock textarea::placeholder{color:#b6a88c;font-size:14px}
+.dog-chat-dock .dog-chat-mic,.dog-chat-dock .dog-chat-send{display:grid;place-items:center;width:40px;height:40px;min-width:40px;min-height:40px;border:1px solid #dfd4b8;border-radius:50%;margin:0;padding:9px;background:transparent;flex:none}
+.dog-chat-dock .dog-chat-send{background:#9ba681;border-color:#9ba681;color:#fffef5}
+.dog-chat-dock .dog-chat-send:disabled{opacity:.42;cursor:default}.dog-chat-mic[aria-pressed=true]{background:#ead5be;color:#9d5c46}
+.dog-chat-dock footer{display:flex;gap:6px;align-items:center;min-height:25px;padding:1px 3px 0;margin:0;font-size:10px;color:#a39375;line-height:1.5}
+.dog-chat-dock footer button{padding:3px 6px;border:0;background:none;white-space:nowrap;font-size:11px;min-height:27px;border-radius:9px}
+.dog-chat-dock footer .dog-chat-history-toggle{padding:3px;width:28px;flex:none;min-height:27px}.dog-chat-history-toggle svg{width:17px;height:17px}
+.dog-chat-status{flex:1;min-width:0;overflow-wrap:anywhere;max-height:36px;overflow:auto}.dog-chat-status[data-error=true]{color:#9b6f50}
+.dog-chat-last-user{margin:0 6px 3px;font-size:11px;line-height:1.5;color:#9a896c;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.dog-chat-history{display:flex;flex-direction:column;padding:14px 17px;border-radius:24px;background:#fffdf5fa;border:1px solid #fffdf5;z-index:2;max-width:500px}
+.dog-chat-history header{flex:none}.dog-chat-history [role=log]{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;font-size:13px;line-height:1.7}
+.dog-chat-history p{padding:10px 12px;border-radius:15px;background:#f0eadb;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere;text-align:left}
+.dog-chat-history .user{margin-left:22px;background:#e5ead8}.dog-chat-history .assistant{margin-right:22px}.dog-chat-history small{display:block;color:#a79777;font-size:10px;margin-bottom:3px}
+.bedroom.dog-chat-open .bedroom-welcome,.bedroom.dog-chat-open .bedroom-bottom,.bedroom.dog-chat-open .bedroom-pin{visibility:hidden;pointer-events:none}
+#page-ai.dog-chat-open .ai-input-area,#page-ai.dog-chat-open .ai-messages,#page-ai.dog-chat-open .ambient-character,#page-ai.dog-chat-open .ambient-drag-hint{visibility:hidden;pointer-events:none}
+@keyframes dog-chat-think{50%{opacity:.45}}
+@media(prefers-reduced-motion:reduce){.dog-chat-thinking{animation:none}}
+@media(max-height:450px){.dog-chat-dock{padding:6px 10px 4px}.dog-chat-bubble{padding:7px 13px 10px}.dog-chat-bubble header{margin:0}.dog-chat-reply{font-size:13px}.dog-chat-last-user{display:none}.dog-chat-dock textarea{max-height:54px}}
+.dog-chat-layer[data-compact=true] .dog-chat-last-user{display:none}.dog-chat-layer[data-compact=true] .dog-chat-bubble{padding:10px 12px}.dog-chat-layer[data-compact=true] .dog-chat-bubble header{height:0;margin:0}.dog-chat-layer[data-compact=true] .dog-chat-bubble header span{display:none}.dog-chat-layer[data-compact=true] .dog-chat-close{position:absolute;right:5px;top:5px;width:24px;height:24px}.dog-chat-layer[data-compact=true] .dog-chat-reply{padding-right:20px;font-size:12px;line-height:1.5}.dog-chat-layer[data-compact=true] .dog-chat-dock textarea{max-height:54px}.dog-chat-layer[data-compact=true] .dog-chat-dock{padding:6px 10px 4px}

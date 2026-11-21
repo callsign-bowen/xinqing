@@ -1,0 +1,102 @@
+/* Three.js owns the room; DOM is limited to labels, access and business panels. */
+body.cabin-enabled { overflow: hidden; background: #c6d2dd; }
+.cabin-enabled .bottom-nav { display: none !important; }
+.cabin { position: fixed; inset: 0; isolation: isolate; overflow: hidden; color: #233d52; background: #c6d2dd; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+.cabin-viewport { position: absolute; inset: 0; background: radial-gradient(ellipse at 68% 40%, #153b59, #081827); }
+.cabin-webgl { display: block; width: 100%; height: 100%; touch-action: none; }
+.cabin-device-layer { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.cabin-device-layer button { pointer-events: auto; }
+.cabin[inert] .cabin-device-layer { visibility: hidden; }
+.cabin::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(16,36,58,.24), transparent 20%, transparent 75%, rgba(13,31,49,.42)); pointer-events: none; }
+.cabin-header { position: absolute; z-index: 3; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: max(28px, env(safe-area-inset-top)) 36px 16px; pointer-events: none; }
+.cabin-brand { display: flex; align-items: center; gap: 12px; color: #355267; text-shadow: 0 1px 8px #ffffffcc; }
+.cabin-brand-symbol { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid #e2f6ff91; border-radius: 50%; font-size: 29px; background: #ffffff15; }
+.cabin-brand h1 { margin: 0 0 5px; font-size: 24px; font-weight: 500; letter-spacing: .14em; }
+.cabin-brand h1 span { font-size: 14px; font-weight: 400; letter-spacing: .12em; }
+.cabin-brand p { margin: 0; font-size: 11px; letter-spacing: .16em; opacity: .85; }
+.cabin-guide-toggle { pointer-events: auto; display: flex; gap: 8px; align-items: center; min-height: 42px; padding: 9px 15px; border: 1px solid #edfaff99; border-radius: 24px; color: #29485e; background: #f4fbffe6; backdrop-filter: blur(12px); box-shadow: 0 4px 24px #24455b0d; font-size: 12px; }
+.cabin-guide-toggle svg { width: 19px; height: 19px; }
+.cabin-device { position: absolute; z-index: 2; display: block; padding: 0; border: 0; border-radius: 18px; background: transparent; color: #213e54; transform: translate(-50%, -50%); -webkit-tap-highlight-color: transparent; }
+.cabin-device:hover { background: radial-gradient(ellipse at center, #c5f8ff24, transparent 70%); border-color: #ddfcff55; }
+.cabin-device-label { position: relative; display: flex; width: max-content; max-width: 220px; align-items: center; gap: 10px; padding: 11px 14px 11px 11px; border: 1px solid #f4fdffdd; border-radius: 18px; background: linear-gradient(135deg, #ffffffdc, #eaf9ffbf); backdrop-filter: blur(12px); box-shadow: 0 4px 24px #23506e24, inset 0 1px 0 #fff; text-align: left; transition: box-shadow .25s, translate .25s; }
+.cabin-device:hover .cabin-device-label { box-shadow: 0 5px 32px #a5f1ff99, 0 8px 25px #23506e2e; translate: 0 -3px; }
+.cabin-device-icon { display: grid; width: 34px; height: 34px; flex: 0 0 auto; place-items: center; border: 1px solid #9bd1e27a; border-radius: 11px; color: #3b7897; background: #eafaffb0; }
+.cabin-device-icon svg { width: 21px; height: 21px; }
+.cabin-device-copy { display: flex; flex-direction: column; gap: 4px; }
+.cabin-device-copy strong { font-size: 14px; font-weight: 500; letter-spacing: .05em; }
+.cabin-device-copy small { font-size: 10px; color: #587183; white-space: nowrap; }
+.cabin-device-arrow { margin-left: 6px; font-size: 16px; color: #5b879d; }
+.cabin-footer { position: absolute; z-index: 2; inset: auto 36px 30px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; color: #36556a; pointer-events: none; text-shadow: 0 1px 8px #ffffffaa; }
+.cabin-welcome { display: flex; align-items: flex-start; gap: 9px; }
+.cabin-presence { display: inline-block; flex: 0 0 auto; width: 5px; height: 5px; margin-top: 8px; border-radius: 50%; background: #d1f7f4; box-shadow: 0 0 10px #adfff5; }
+.cabin-welcome p { margin: 0; font-size: 14px; font-weight: 300; line-height: 1.9; letter-spacing: .12em; }
+.cabin-hint { margin: 0; padding: 9px 14px; font-size: 10px; letter-spacing: .08em; border: 1px solid #ffffff3d; border-radius: 24px; background: #16374c24; }
+.cabin-mobile-hint { display: none; }
+.cabin-guide { position: absolute; z-index: 5; top: max(82px, calc(env(safe-area-inset-top) + 58px)); right: 36px; width: min(300px, calc(100% - 32px)); padding: 18px; background: #f6fcfff5; border: 1px solid #fff; border-radius: 22px; box-shadow: 0 16px 50px #14314a2b; backdrop-filter: blur(20px); }
+.cabin-guide > p { margin: 0 0 12px; color: #698092; font-size: 11px; line-height: 1.7; }
+.cabin-guide button { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 6px; border: 0; border-bottom: 1px solid #30546e12; color: #29465c; background: transparent; text-align: left; }
+.cabin-guide button:last-child { border-bottom: 0; }
+.cabin-guide button:hover { background: #dceff799; border-radius: 10px; }
+.cabin-guide button > span:nth-child(2) { flex: 1; display: grid; gap: 5px; }
+.cabin-guide-number { color: #7d9db0; font-size: 11px; font-variant-numeric: tabular-nums; }
+.cabin-guide strong { font-size: 13px; font-weight: 500; }
+.cabin-guide small { color: #6b8394; font-size: 10px; }
+.cabin-pan-controls { position: absolute; z-index: 2; left: 16px; right: 16px; bottom: max(118px, calc(env(safe-area-inset-bottom) + 100px)); display: flex; justify-content: space-between; pointer-events: none; }
+.cabin-pan-controls button { pointer-events: auto; width: 40px; height: 40px; border: 1px solid #ecfaffaa; border-radius: 50%; background: #f4fbffcf; color: #376078; font-size: 26px; }
+.cabin-scene-status { position: absolute; z-index: 4; left: 50%; top: 45%; transform: translate(-50%, -50%); width: min(320px, 85vw); padding: 30px 24px; color: #244b63; background: #f2fbffed; border: 1px solid #fff; border-radius: 26px; text-align: center; box-shadow: 0 12px 60px #071b3344; }
+.cabin-scene-status strong { display: block; margin-top: 22px; font-size: 16px; font-weight: 500; }
+.cabin-scene-status p { font-size: 12px; line-height: 1.8; color: #668397; }
+.cabin-loading-orbit { display: block; width: 40px; height: 40px; margin: auto; border: 1px solid #a1c9db; border-top: 2px solid #429ab8; border-radius: 50%; animation: cabin-loading 2s linear infinite; }
+.cabin-scene-unavailable .cabin-loading-orbit { animation: none; opacity: .4; }
+@keyframes cabin-loading { to { rotate: 360deg; } }
+.cabin [hidden], .cabin-scrim[hidden], .cabin-panel[hidden], .cabin-enabled .cabin-source[hidden] { display: none !important; }
+.cabin button:focus-visible { outline: 3px solid #1479a4; outline-offset: 4px; }
+.cabin-scrim { position: fixed; inset: 0; z-index: 25; background: #17324948; backdrop-filter: blur(4px); }
+.cabin-scrim[data-section='chat'] { background: #1732491a; backdrop-filter: none; }
+.cabin-panel { position: fixed; z-index: 30; top: 5dvh; right: 6vw; display: flex; flex-direction: column; width: min(480px, 88vw); height: 90dvh; overflow: hidden; color: var(--text); background: var(--bg); border: 1px solid #ffffffab; border-radius: 26px; box-shadow: 0 24px 100px #13324a52; animation: cabin-panel-enter .2s ease both; }
+.cabin-panel[data-section='chat'] { left: 6vw; right: auto; width: min(600px, 88vw); }
+.cabin-panel-header { display: flex; align-items: center; justify-content: space-between; flex: 0 0 auto; gap: 16px; padding: 22px 24px 18px; border-bottom: 1px solid var(--line); background: var(--bg); }
+.cabin-panel-eyebrow { margin: 0 0 8px; color: var(--muted); font-size: 10px; letter-spacing: .14em; }
+.cabin-panel-header h2 { margin: 0; font-size: 21px; font-weight: 500; letter-spacing: .06em; }
+#cabin-panel-subtitle { margin: 7px 0 0; color: var(--muted); font-size: 11px; }
+.cabin-panel-close { display: grid; width: 40px; height: 40px; flex: 0 0 auto; place-items: center; color: var(--text); background: var(--soft); border: 1px solid var(--line); border-radius: 50%; }
+.cabin-panel-close svg { width: 18px; height: 18px; }
+.cabin-panel-body { min-height: 0; flex: 1; overflow-y: auto; overscroll-behavior: contain; }
+.cabin-enabled .cabin-panel .cabin-source { width: 100%; max-width: none; min-height: 0; margin: 0; padding: 0 24px 24px; position: relative; inset: auto; }
+.cabin-enabled .cabin-panel .app:not([hidden]), .cabin-enabled .cabin-panel #page-profile:not([hidden]) { display: flex !important; flex-direction: column; }
+.cabin-enabled .cabin-panel #page-report:not([hidden]) { display: block !important; padding-top: 4px; }
+.cabin-enabled .cabin-panel #page-ai:not([hidden]) { display: flex !important; flex-direction: column; height: 100%; padding: 0 24px; overflow: hidden; }
+.cabin-enabled .cabin-panel .ai-main { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+.cabin-enabled .cabin-panel .ai-input { width: 0; min-width: 0; }
+.cabin-enabled .cabin-panel .ai-header { padding-top: 12px; }
+.cabin-enabled .cabin-panel .report-header { min-height: 60px; }
+.cabin-enabled .cabin-panel .profile-greeting { min-height: 150px; }
+.cabin-enabled .cabin-panel .greeting { padding-top: 0; }
+/* Fixed descendants (existing history/safety modals) must stay viewport-relative:
+   no transform/filter/contain may be applied to this panel or its page ancestors. */
+@keyframes cabin-panel-enter { from { opacity: 0; } to { opacity: 1; } }
+@media (max-width: 600px) {
+  .cabin-header { padding: max(20px, env(safe-area-inset-top)) 18px 12px; gap: 8px; }
+  .cabin-brand { gap: 8px; }
+  .cabin-brand-symbol { width: 32px; height: 32px; font-size: 22px; }
+  .cabin-brand h1 { font-size: 20px; }
+  .cabin-brand h1 span { font-size: 11px; letter-spacing: .03em; }
+  .cabin-brand p { font-size: 9px; letter-spacing: .04em; }
+  .cabin-guide-toggle { min-height: 38px; padding: 7px 10px; font-size: 11px; gap: 5px; }
+  .cabin-guide { right: 16px; }
+  .cabin-device-label { gap: 8px; padding: 10px 12px; border-radius: 15px; }
+  .cabin-device-icon { width: 30px; height: 30px; }
+  .cabin-device-copy strong { font-size: 13px; }
+  .cabin-device-copy small { font-size: 9px; }
+  .cabin-footer { inset: auto 20px max(24px, env(safe-area-inset-bottom)); align-items: flex-start; flex-direction: column; gap: 12px; }
+  .cabin-welcome p { font-size: 13px; }
+  .cabin-hint { font-size: 9px; padding: 7px 10px; }
+  .cabin-panel, .cabin-panel[data-section='chat'] { inset: max(12px, env(safe-area-inset-top)) 10px max(12px, env(safe-area-inset-bottom)); width: auto; height: auto; border-radius: 22px; }
+  .cabin-panel-header { padding: 17px 18px 14px; }
+  .cabin-panel-header h2 { font-size: 19px; }
+  .cabin-enabled .cabin-panel .cabin-source { padding-left: 16px; padding-right: 16px; }
+  .cabin-enabled .cabin-panel #page-ai:not([hidden]) { padding: 0 14px; }
+}
+@media (max-width: 759px) { .cabin-desktop-hint { display: none; }.cabin-mobile-hint { display: inline; } }
+@media (min-width: 760px) { .cabin-pan-controls { display: none; } }
+@media (prefers-reduced-motion: reduce) { .cabin-device, .cabin-device-label, .cabin-panel, .cabin-loading-orbit { animation: none; transition: none; } }

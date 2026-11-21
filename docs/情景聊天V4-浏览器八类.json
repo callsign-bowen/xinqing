@@ -1,0 +1,78 @@
+{
+  "origin": "http://127.0.0.1:5176/",
+  "checks": [
+    {
+      "category": "家庭",
+      "title": "妈妈催婚",
+      "expectedRole": "妈妈",
+      "displayName": "妈妈",
+      "layout": "side",
+      "line": "你看人家跟我差不多岁数的，孩子都结婚了，就你还一点不着急。再这么挑下去，好的人都被挑走了，到时候你后悔都来不及。",
+      "portraitLoaded": true
+    },
+    {
+      "category": "职场",
+      "title": "跟领导提加薪",
+      "expectedRole": "直属领导",
+      "displayName": "直属领导",
+      "layout": "side",
+      "line": "你来得正好，我十分钟后还有个会，有事直接说。",
+      "portraitLoaded": true
+    },
+    {
+      "category": "亲密关系",
+      "title": "伴侣冷暴力",
+      "expectedRole": "伴侣",
+      "displayName": "伴侣",
+      "layout": "stacked",
+      "line": "你回来了。",
+      "portraitLoaded": true
+    },
+    {
+      "category": "朋友",
+      "title": "朋友借钱不还",
+      "expectedRole": "朋友",
+      "displayName": "朋友",
+      "layout": "side",
+      "line": "那个……最近手头还是有点紧，之前那五千的事我一直记着，就是还没凑齐。",
+      "portraitLoaded": true
+    },
+    {
+      "category": "自我",
+      "title": "拒绝额外帮忙",
+      "expectedRole": "社团同学",
+      "displayName": "社团同学",
+      "layout": "stacked",
+      "line": "这周末社团那边要摆摊，我临时有事走不开，你能不能替我顶一下？",
+      "portraitLoaded": true
+    },
+    {
+      "category": "消费",
+      "title": "沟通商品退换",
+      "expectedRole": "售后工作人员",
+      "displayName": "售后工作人员",
+      "layout": "side",
+      "line": "您好，这边是售后。您说水杯有漏水的情况，麻烦先提供一下订单号，我好核对。",
+      "portraitLoaded": true
+    },
+    {
+      "category": "照护",
+      "title": "协商陪诊分工",
+      "expectedRole": "哥哥",
+      "displayName": "哥哥",
+      "layout": "stacked",
+      "line": "这次复诊得有人陪着去，我这边请假不太方便，你先看看你那边能不能腾出时间？",
+      "portraitLoaded": true
+    },
+    {
+      "category": "数字",
+      "title": "提醒群友核实消息",
+      "expectedRole": "群友阿林",
+      "displayName": "群友阿林",
+      "layout": "side",
+      "line": "群里那条我也就顺手转一下，别搞得像我在传什么大事，你们要觉得不靠谱我就不发了。",
+      "portraitLoaded": true
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,59 @@
+{
+  "renderer": {
+    "backgroundImages": 0,
+    "canvases": 1,
+    "date": "2026-11-18",
+    "fps": "40",
+    "frames": "5570",
+    "layout": "wide",
+    "meshes": "177",
+    "nuoState": "idle",
+    "quality": "balanced",
+    "renderer": "three-webgl2",
+    "state": "ready",
+    "triangles": "828072",
+    "vertices": "315515",
+    "viewport": {
+      "height": 720,
+      "width": 1280
+    }
+  },
+  "raycastEntrances": {
+    "journal": "passed",
+    "chat": "passed",
+    "emotion": "passed",
+    "profile": "passed"
+  },
+  "mobile": {
+    "size": "390x844",
+    "panButtons": "passed",
+    "dragWithoutOpeningPanel": "passed",
+    "labelsInsideViewport": "passed",
+    "draftPreserved": "passed"
+  },
+  "modelRequest": "passed-real-model-http-200-and-four-browser-turns",
+  "runtimeAcceptance": {
+    "date": "2026-11-18",
+    "explicitStartupApproval": true,
+    "successfulModelRounds": 4,
+    "cancelledRequestChecks": 1,
+    "statesObserved": [
+      "thinking",
+      "responding",
+      "listening"
+    ],
+    "historyBefore": {
+      "assistants": 5,
+      "users": 5
+    },
+    "historyAfter": {
+      "assistants": 5,
+      "errors": 1,
+      "hasCorrectContext": true,
+      "typing": 0,
+      "users": 5
+    },
+    "cancelledEntryShowsRetryPromptAfterRefresh": true,
+    "consoleErrors": 0
+  }
+}

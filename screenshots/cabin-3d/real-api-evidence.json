@@ -1,0 +1,9 @@
+{
+  "status": 200,
+  "replySource": "model",
+  "riskLevel": "low",
+  "hasReply": true,
+  "replyLength": 5,
+  "durationMs": 755,
+  "syntheticInput": true
+}

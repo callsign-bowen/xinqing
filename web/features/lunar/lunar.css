@@ -1,0 +1,86 @@
+/* One shared lunar world behind the existing four business pages. */
+body.lunar-enabled, .lunar-home { background: #030711; color: #f0f3fa; }
+.lunar-home .cabin-viewport { background: #030711; cursor: grab; }
+.lunar-home .cabin-viewport[data-dragging='true'] { cursor: grabbing; }
+.lunar-home::after { background: linear-gradient(#03071166, transparent 27%, transparent 67%, #03071199); }
+.lunar-home .cabin-brand { color: #f0f3fa; text-shadow: 0 2px 16px #000a; }
+.lunar-home .cabin-brand-symbol { color: #e2e8f2; background: #121a2c55; border-color: #e2e8f233; }
+.lunar-home .cabin-brand h1 { letter-spacing: .08em; }
+.lunar-home .cabin-brand h1 span { font-size: 16px; letter-spacing: .05em; }
+.lunar-home .cabin-brand p { font-size: 14px; letter-spacing: .03em; }
+.lunar-actions { display: flex; align-items: center; gap: 8px; pointer-events: auto; }
+.lunar-actions > button, .lunar-home .cabin-pan-controls button {
+  min-height: 44px; padding: 10px 16px; border: 1px solid #e1e8f033; border-radius: 24px;
+  background: #172031b8; color: #f0f3fa; backdrop-filter: blur(12px); font: inherit; font-size: 14px;
+}
+.lunar-actions > button:disabled { opacity: .45; cursor: default; }
+.lunar-actions > button:hover:not(:disabled) { background: #334159d9; }
+.lunar-actions .cabin-guide-toggle { box-shadow: none; }
+.lunar-home .cabin-guide { top: 96px; }
+.lunar-home .cabin-guide > p { font-size: 14px; }
+.lunar-home .cabin-guide strong { font-size: 16px; }
+.lunar-home .cabin-guide small { font-size: 13px; }
+.lunar-home .lunar-nav {
+  inset: auto auto max(22px, env(safe-area-inset-bottom)) 50%; transform: translateX(-50%);
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;
+  width: min(820px, calc(100% - 48px)); z-index: 3;
+  padding: 8px; border: 1px solid #e1e8f033; border-radius: 26px;
+  background: #111a2bd9; backdrop-filter: blur(16px); box-shadow: 0 12px 50px #0005;
+}
+.lunar-nav .cabin-device { position: relative; transform: none; border-radius: 18px; color: #f0f3fa; }
+.lunar-nav .cabin-device-label {
+  width: 100%; max-width: none; min-height: 64px; box-sizing: border-box; gap: 9px;
+  padding: 10px 12px; border: 1px solid transparent; background: transparent; box-shadow: none; backdrop-filter: none;
+}
+.lunar-nav .cabin-device:hover .cabin-device-label { background: #8099b225; box-shadow: none; translate: none; border-color: #cad7e244; }
+.lunar-nav .cabin-device-icon { color: #c9d9e9; border: 0; background: #99b4d014; }
+.lunar-nav .cabin-device-copy strong { font-size: 16px; }
+.lunar-nav .cabin-device-copy small { color: #b3c1d2; font-size: 12px; letter-spacing: 0; }
+.lunar-home .cabin-footer { bottom: 126px; left: 36px; color: #dae3ef; text-shadow: 0 1px 6px #000; }
+.lunar-home .cabin-hint { padding: 0; border: 0; background: transparent; font-size: 14px; }
+.lunar-home .cabin-pan-controls { bottom: 138px; }
+.lunar-home .cabin-pan-controls button { padding: 0; width: 44px; font-size: 26px; }
+.lunar-home .cabin-scene-status { color: #e2eaf4; background: #151e30f0; border-color: #c5d5ed33; }
+.lunar-home .cabin-scene-status p { color: #bdc9da; font-size: 14px; }
+.lunar-home [data-lunar-retry] { min-height: 44px; padding: 10px 18px; color: #e7edf5; background: #526a8d55; border: 1px solid #c1d4ee55; border-radius: 22px; font-size: 14px; }
+.lunar-home button:focus-visible, .lunar-home .cabin-viewport:focus-visible { outline: 2px solid #d4e9ff; outline-offset: 4px; }
+
+/* Keep the existing page controls readable over the much darker lunar ground. */
+.lunar-enabled .cabin-panel::before { background: linear-gradient(125deg, #eff7fcf0, #d5e6f2ed); }
+.lunar-enabled .cabin-panel { border-color: #e2edfa99; box-shadow: 0 20px 90px #0007; }
+.lunar-enabled .cabin-scrim { background: #0307114d; }
+.lunar-enabled .cabin-chat .ai-header { top: 112px; background: #edf5fbea; }
+.lunar-enabled .cabin-chat-bubble { background: #f1f6f3ed; box-shadow: 0 12px 40px #0005; }
+.lunar-enabled .cabin-chat .ai-input-area { background: #e6eff8ed; box-shadow: 0 8px 32px #0005; }
+.lunar-enabled .cabin-panel-eyebrow, .lunar-enabled #cabin-panel-subtitle { font-size: 13px; }
+.lunar-enabled .cabin-chat :is(.cabin-chat-exit,.cabin-transcript-toggle,.crisis-button) { font-size: 14px; }
+.lunar-enabled .cabin-speech-state, .lunar-enabled .cabin-speech-actions button { font-size: 13px; }
+
+@media (max-width: 759px) {
+  .lunar-home .cabin-header { display: block; padding: max(18px, env(safe-area-inset-top)) 18px 10px; }
+  .lunar-home .cabin-brand h1 { font-size: 21px; }
+  .lunar-home .cabin-brand h1 span { font-size: 15px; }
+  .lunar-home .cabin-brand p { margin-top: 4px; font-size: 12px; }
+  .lunar-actions { margin-top: 14px; gap: 6px; }
+  .lunar-actions > button { min-height: 40px; padding: 8px 13px; font-size: 14px; }
+  .lunar-actions .cabin-guide-toggle { margin-left: auto; }
+  .lunar-home .cabin-guide { top: 136px; }
+  .lunar-home .lunar-nav { width: calc(100% - 24px); padding: 5px; gap: 2px; border-radius: 22px; bottom: max(16px, env(safe-area-inset-bottom)); }
+  .lunar-nav .cabin-device-label { min-height: 66px; flex-direction: column; justify-content: center; gap: 5px; padding: 8px 2px; border-radius: 17px; }
+  .lunar-nav .cabin-device-icon { width: 24px; height: 24px; background: transparent; }
+  .lunar-nav .cabin-device-icon svg { width: 22px; height: 22px; }
+  .lunar-nav .cabin-device-copy strong { font-size: 14px; }
+  .lunar-nav .cabin-device-copy small { display: none; }
+  .lunar-home .cabin-footer { bottom: 106px; left: 18px; right: 18px; align-items: center; }
+  .lunar-home .cabin-hint { font-size: 12px; text-align: center; }
+  .lunar-home .cabin-pan-controls { bottom: 142px; }
+  .lunar-enabled .cabin-panel[data-section] { inset: max(14px, env(safe-area-inset-top)) 10px max(14px, env(safe-area-inset-bottom)); }
+  .lunar-enabled .cabin-chat .ai-header { top: 140px; left: 12px; right: 12px; padding: 6px; }
+  .lunar-enabled .cabin-chat :is(.cabin-chat-exit,.cabin-transcript-toggle,.crisis-button) { font-size: 12px; }
+  .lunar-enabled .cabin-chat .cabin-transcript { top: max(16px, env(safe-area-inset-top)); }
+}
+@media (max-height: 500px) {
+  .lunar-home .cabin-brand p, .lunar-home .cabin-footer { display: none; }
+  .lunar-home .cabin-header { display: flex; }
+  .lunar-actions { margin-top: 0; }
+}

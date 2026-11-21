@@ -1,0 +1,10 @@
+Draco 3D Data Compression
+https://github.com/google/draco
+
+The unmodified glTF WebAssembly decoder and JavaScript wrapper in this
+directory are distributed under the Apache License, Version 2.0.
+See LICENSE.txt.
+
+These files were copied from the installed Three.js distribution:
+node_modules/three/examples/jsm/libs/draco/gltf/
+Three.js attribution is preserved in THREE-LICENSE.txt.

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "corpus": {
+    "name": "心晴 · AI 情景聊天语料库",
+    "version": "1.0.0",
+    "updatedAt": "2026-11-14",
+    "totalSlots": 64,
+    "approvedCount": 0,
+    "draftCount": 1
+  },
+  "licenseClasses": ["commercial_ok", "research_only", "restricted"],
+  "categories": [
+    {
+      "code": "FAM",
+      "order": 1,
+      "name": "家庭",
+      "dir": "ORIGINAL_CORPUS/FAM",
+      "description": "原生家庭、代际期待、亲戚往来、过年边界。核心难点是愧疚与“为你好”。",
+      "slots": [
+        { "id": "FAM-001", "seq": 1, "subcategory": "催婚", "workingTitle": "父母催婚", "priority": "P0", "risk": "low", "status": "draft", "file": "ORIGINAL_CORPUS/FAM/FAM-001-父母催婚-v1.json" },
+        { "id": "FAM-002", "seq": 2, "subcategory": "被比较", "workingTitle": "亲戚拿你和表姐比", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FAM-003", "seq": 3, "subcategory": "父母控制", "workingTitle": "父母替你安排工作或相亲", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "FAM-004", "seq": 4, "subcategory": "亲戚隐私", "workingTitle": "亲戚追问工资和对象", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FAM-005", "seq": 5, "subcategory": "过年边界", "workingTitle": "过年只待三天被说不孝", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FAM-006", "seq": 6, "subcategory": "催生", "workingTitle": "结婚后被催生孩子", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "FAM-007", "seq": 7, "subcategory": "经济索取", "workingTitle": "被要求出钱帮弟弟", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "FAM-008", "seq": 8, "subcategory": "父母冷战", "workingTitle": "父母吵架把你夹在中间", "priority": "P2", "risk": "medium", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "WRK",
+      "order": 2,
+      "name": "职场",
+      "dir": "ORIGINAL_CORPUS/WRK",
+      "description": "谈薪、边界、责任与权力差。核心难点是不撕破脸也要把事说清。",
+      "slots": [
+        { "id": "WRK-001", "seq": 1, "subcategory": "谈薪", "workingTitle": "跟领导提加薪", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "WRK-002", "seq": 2, "subcategory": "拒绝加班", "workingTitle": "被临时加活", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "WRK-003", "seq": 3, "subcategory": "甩锅", "workingTitle": "同事把责任推给你", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "WRK-004", "seq": 4, "subcategory": "领导否定", "workingTitle": "被当众否定能力", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "WRK-005", "seq": 5, "subcategory": "犯错道歉", "workingTitle": "汇报出错怎么收场", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "WRK-006", "seq": 6, "subcategory": "离职被裁", "workingTitle": "提离职被挽留或被裁", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "WRK-007", "seq": 7, "subcategory": "同事排挤", "workingTitle": "被小团体孤立", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "WRK-008", "seq": 8, "subcategory": "面试压价", "workingTitle": "面试被压薪资或被问婚育", "priority": "P1", "risk": "medium", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "REL",
+      "order": 3,
+      "name": "亲密关系",
+      "dir": "ORIGINAL_CORPUS/REL",
+      "description": "冷暴力、边界、分手与钱。核心难点是既说清感受，又不把对方逼到墙角。",
+      "slots": [
+        { "id": "REL-001", "seq": 1, "subcategory": "冷暴力", "workingTitle": "伴侣冷战不说话", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "REL-002", "seq": 2, "subcategory": "已读不回", "workingTitle": "消息被长时间不回", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "REL-003", "seq": 3, "subcategory": "提分手", "workingTitle": "想分手但怕对方难受", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "REL-004", "seq": 4, "subcategory": "查手机", "workingTitle": "伴侣要看你的手机", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "REL-005", "seq": 5, "subcategory": "见家长", "workingTitle": "第一次见家长被挑剔", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "REL-006", "seq": 6, "subcategory": "异地", "workingTitle": "异地恋里的不确定", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "REL-007", "seq": 7, "subcategory": "家务分工", "workingTitle": "家务全落在你身上", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "REL-008", "seq": 8, "subcategory": "钱怎么花", "workingTitle": "AA 还是共同账户", "priority": "P1", "risk": "medium", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "FRD",
+      "order": 4,
+      "name": "朋友",
+      "dir": "ORIGINAL_CORPUS/FRD",
+      "description": "借钱、随份子、室友与“把我当自己人”。核心难点是不伤关系地说不。",
+      "slots": [
+        { "id": "FRD-001", "seq": 1, "subcategory": "借钱", "workingTitle": "朋友借钱不还", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FRD-002", "seq": 2, "subcategory": "随份子", "workingTitle": "被问随多少份子", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FRD-003", "seq": 3, "subcategory": "室友边界", "workingTitle": "室友随便用你的东西", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FRD-004", "seq": 4, "subcategory": "被开玩笑", "workingTitle": "玩笑让你不舒服", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FRD-005", "seq": 5, "subcategory": "拒绝聚会", "workingTitle": "不想去的酒局", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "FRD-006", "seq": 6, "subcategory": "情绪垃圾桶", "workingTitle": "朋友只向你倒情绪", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "FRD-007", "seq": 7, "subcategory": "传话背叛", "workingTitle": "朋友把你的话传出去", "priority": "P2", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "FRD-008", "seq": 8, "subcategory": "借住借车", "workingTitle": "朋友借住或借车", "priority": "P2", "risk": "low", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "SELF",
+      "order": 5,
+      "name": "自我",
+      "dir": "ORIGINAL_CORPUS/SELF",
+      "description": "不会拒绝、说不出口、比较与自责。核心难点是没有“对方”也要练。",
+      "slots": [
+        { "id": "SELF-001", "seq": 1, "subcategory": "不会拒绝", "workingTitle": "别人一开口你就答应", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "SELF-002", "seq": 2, "subcategory": "表达需求", "workingTitle": "说不出自己想要什么", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "SELF-003", "seq": 3, "subcategory": "被夸", "workingTitle": "被夸就急着否认", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "SELF-004", "seq": 4, "subcategory": "失败", "workingTitle": "搞砸之后怎么面对", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "SELF-005", "seq": 5, "subcategory": "同辈比较", "workingTitle": "同龄人都买房了", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "SELF-006", "seq": 6, "subcategory": "拖延考试", "workingTitle": "一直拖到最后一晚", "priority": "P1", "risk": "low", "status": "reserved", "file": null },
+        { "id": "SELF-007", "seq": 7, "subcategory": "失眠累", "workingTitle": "累到不想说话", "priority": "P2", "risk": "low", "status": "reserved", "file": null },
+        { "id": "SELF-008", "seq": 8, "subcategory": "羞耻自责", "workingTitle": "反复想自己说错的话", "priority": "P2", "risk": "medium", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "CNS",
+      "order": 6,
+      "name": "消费",
+      "dir": "ORIGINAL_CORPUS/CNS",
+      "description": "退款、押金、推销与维权。核心难点是对陌生人把规则说清，不被话术带走。",
+      "slots": [
+        { "id": "CNS-001", "seq": 1, "subcategory": "退款", "workingTitle": "特价商品不退不换", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "CNS-002", "seq": 2, "subcategory": "推销办卡", "workingTitle": "被限时话术推着办卡", "priority": "P0", "risk": "low", "status": "reserved", "file": null },
+        { "id": "CNS-003", "seq": 3, "subcategory": "租房押金", "workingTitle": "退租被扣押金", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CNS-004", "seq": 4, "subcategory": "医患问诊", "workingTitle": "问医生方案和风险", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CNS-005", "seq": 5, "subcategory": "打车外卖", "workingTitle": "被绕路或少送", "priority": "P2", "risk": "low", "status": "reserved", "file": null },
+        { "id": "CNS-006", "seq": 6, "subcategory": "邻里噪音", "workingTitle": "楼上半夜吵", "priority": "P2", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CNS-007", "seq": 7, "subcategory": "预付卡纠纷", "workingTitle": "健身房关门卡没用完", "priority": "P2", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CNS-008", "seq": 8, "subcategory": "服务态度", "workingTitle": "被服务人员呛声", "priority": "P2", "risk": "low", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "CARE",
+      "order": 7,
+      "name": "照护",
+      "dir": "ORIGINAL_CORPUS/CARE",
+      "description": "陪诊、分工、丧亲与耗竭。高风险类：只练“怎么问、怎么分工、怎么求助”，不重演现场。",
+      "slots": [
+        { "id": "CARE-001", "seq": 1, "subcategory": "陪诊", "workingTitle": "陪家人看病怎么问医生", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CARE-002", "seq": 2, "subcategory": "照护分工", "workingTitle": "兄弟姐妹把照顾推给你", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CARE-003", "seq": 3, "subcategory": "丧亲", "workingTitle": "被劝“节哀”时怎么开口", "priority": "P1", "risk": "high", "status": "blocked", "file": null },
+        { "id": "CARE-004", "seq": 4, "subcategory": "照顾者耗竭", "workingTitle": "照顾到撑不住", "priority": "P1", "risk": "high", "status": "blocked", "file": null },
+        { "id": "CARE-005", "seq": 5, "subcategory": "宠物离世", "workingTitle": "宠物离世不被理解", "priority": "P2", "risk": "high", "status": "blocked", "file": null },
+        { "id": "CARE-006", "seq": 6, "subcategory": "朋友抑郁", "workingTitle": "朋友说不想活了", "priority": "P1", "risk": "high", "status": "blocked", "file": null },
+        { "id": "CARE-007", "seq": 7, "subcategory": "自己确诊", "workingTitle": "拿到诊断后怎么问", "priority": "P2", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "CARE-008", "seq": 8, "subcategory": "哀伤支持", "workingTitle": "朋友丧亲时怎么回应", "priority": "P2", "risk": "medium", "status": "reserved", "file": null }
+      ]
+    },
+    {
+      "code": "DIG",
+      "order": 8,
+      "name": "数字生活",
+      "dir": "ORIGINAL_CORPUS/DIG",
+      "description": "网暴、隐私、诈骗与 AI 依赖。核心难点是先自保、留证据，再谈回应。",
+      "slots": [
+        { "id": "DIG-001", "seq": 1, "subcategory": "网暴", "workingTitle": "评论区被围攻", "priority": "P0", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "DIG-002", "seq": 2, "subcategory": "隐私开盒", "workingTitle": "照片被发到群里", "priority": "P0", "risk": "high", "status": "blocked", "file": null },
+        { "id": "DIG-003", "seq": 3, "subcategory": "网络诈骗", "workingTitle": "被要求先转保证金", "priority": "P1", "risk": "high", "status": "blocked", "file": null },
+        { "id": "DIG-004", "seq": 4, "subcategory": "AI依赖", "workingTitle": "“只有跟你说话才不难受”", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "DIG-005", "seq": 5, "subcategory": "群聊冲突", "workingTitle": "群里被集体指责", "priority": "P1", "risk": "medium", "status": "reserved", "file": null },
+        { "id": "DIG-006", "seq": 6, "subcategory": "朋友圈比较", "workingTitle": "刷到同龄人的光鲜生活", "priority": "P2", "risk": "low", "status": "reserved", "file": null },
+        { "id": "DIG-007", "seq": 7, "subcategory": "造谣传谣", "workingTitle": "被编故事传开", "priority": "P2", "risk": "high", "status": "blocked", "file": null },
+        { "id": "DIG-008", "seq": 8, "subcategory": "网络交友", "workingTitle": "网友见面安全", "priority": "P2", "risk": "high", "status": "blocked", "file": null }
+      ]
+    }
+  ],
+  "notes": [
+    "status=reserved 表示只占编号，没有内容；blocked 表示高风险，必须先过安全评审才能开写。",
+    "file 为 null 时不得在 ORIGINAL_CORPUS 下存在同名文件；有文件时状态必须与文件内 review.status 一致。",
+    "approvedCount 与 draftCount 由校验脚本核对，不允许手工虚报。",
+    "本索引只描述分类与编号，情景正文一律放在 ORIGINAL_CORPUS 或 PRODUCTION_APPROVED。"
+  ]
+}

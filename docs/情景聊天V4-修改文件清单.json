@@ -1,0 +1,88 @@
+{
+  "gitStatus": "not a git repository",
+  "baseline": "tmp/scenario-v4-review-baseline",
+  "modified": [
+    {
+      "path": "account-service/completion-messages.mjs",
+      "before": "4cd71d24a231d10c53026a109d2a91c1d1f17787361595244c319b3c53dee757",
+      "after": "4e43587f6dd4ee3decc364d3f579b393498a152885ea541261e1355873d81dc0"
+    },
+    {
+      "path": "account-service/server.mjs",
+      "before": "3dfa6000e30a1376af1ef9db87dc45d02a1931edb97da88b49f9750bcff48ead",
+      "after": "905a0869a5135a39591189169c5f5e29903f09752faf7982d3f146afce6b746f"
+    },
+    {
+      "path": "account-service/tests/completion-diagnostics.test.mjs",
+      "before": "1a5346fca4753309ac5c973eb3958f213050a769b8df84404cd6e082e00ea52d",
+      "after": "66cfebd1e1b79c815ad6c93a4c30b62740b0ca23adad0fc22c93aadc2089fbbe"
+    },
+    {
+      "path": "account-service/tests/completion-messages.test.mjs",
+      "before": "a4f5b8c26e57e3efa6a62d090eff733dfec87c5035a6e1d7cfe60cb846eea214",
+      "after": "d31f0529ec32a950a99e29fc78cedb0c62ad741a55168d0d74eb8f58242f8f66"
+    },
+    {
+      "path": "account-service/tests/completion-route.test.mjs",
+      "before": "f3c5b99184926f50344785d07415cfbc73cce4c12410d9d7f8068dda37a01a8b",
+      "after": "cee47f8a6d0522ec675c5d5abcd23d5461a7c640c4ea8bc956908edbb859a569"
+    },
+    {
+      "path": "package.json",
+      "before": "74fdae26b0ff47c6e53fa7ab58faeaecbd8d618c5c2d767f86152326265ec50d",
+      "after": "4426f5b219d3c7e147cd9e6eb72acee8e767d6796de29d122e1d1ca389fbb683"
+    },
+    {
+      "path": "web/features/scenario/dialogue.ts",
+      "before": "e5991e9270fae5f2444c8f620efe33303da10d4c483a4199fd4720890e036598",
+      "after": "19ea3b42f5e97fa39822e7d5f9af7d9f235eec7133502673a3af7a9179b42ff1"
+    },
+    {
+      "path": "web/features/scenario/history.mjs",
+      "before": "f26ece73114947d580b42d2eee4d6699058847bee8d572c7519c2df099635c03",
+      "after": "3e8ebfdb2ece1533adec0c1f0d61f8722d73c5461f9c3ad85ace3399f7b746f4"
+    },
+    {
+      "path": "web/features/scenario/history.test.mjs",
+      "before": "49f651751e9290a56a854b5cf183781eb62281d93ea1f605e5dc0cbe3b7b8a6c",
+      "after": "1139166b86cbe3c1fae178e0d14f5f1e524937eb819654a904c8725d439748da"
+    },
+    {
+      "path": "web/features/scenario/index.ts",
+      "before": "9e3a701feade3590b47cfc471239fc55be8f893129b44a05619e07fb0e7beff4",
+      "after": "387a3b3c097e2fd3c3a9b186b6e64e0099b22da10f5b6f68b0923d0e64c0feb2"
+    },
+    {
+      "path": "web/features/scenario/practice-session.mjs",
+      "before": "2befe9a4e907070ce3e1ab9c875e20c436594639f156ae78941ece3b9b6212c1",
+      "after": "0b9318895ae4568ba7106a3262b551cb23318a1eee55b91a6a171665f829c883"
+    },
+    {
+      "path": "web/features/scenario/practice.test.mjs",
+      "before": "4c2dd4c5a65c253ddc90b15a36e23a662a419dc551e3f2995f384f7f6b07cacf",
+      "after": "184ad297812279db8bf2b1bb348645df7b2bf4e239bd66b9474574d1879a46cc"
+    },
+    {
+      "path": "web/kernel/api.test.mjs",
+      "before": "ca99a3148719139842e86470a3ef43f4e0ab910eb3f704a3724a675b6892dc6b",
+      "after": "f06c28f80ad8d919e99b5ada67614f158bdd9960cb72935ad1729dace6b3b3c4"
+    },
+    {
+      "path": "web/kernel/api.ts",
+      "before": "00d7d39e03c4e1e50f7188f1ba4af015977835a581c8a49f66b5179c9aafa927",
+      "after": "2418d91ea5334bc0d5c6baeb17e37fd417b397eb6e074b4e36b126c48434f0d5"
+    }
+  ],
+  "addedSource": [
+    "account-service/tests/support/preview-v4-real.mjs",
+    "account-service/tests/run-v4-real.mjs"
+  ],
+  "unchangedReused": [
+    "web/features/scenario/scenarios.ts",
+    "web/features/scenario/practice.ts",
+    "web/features/scenario/presentation.ts",
+    "web/features/scenario/scenario.css",
+    "web/features/scenario/assist.ts",
+    "public/scenario/family-marriage/mother-neutral-v1.png"
+  ]
+}

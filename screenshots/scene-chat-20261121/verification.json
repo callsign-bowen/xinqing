@@ -1,0 +1,47 @@
+{
+  "date": "2026-11-21",
+  "source": "C:\\Users\\汪晨\\Desktop\\CBT初版",
+  "assets": {
+    "checked": 73,
+    "missing": 0,
+    "approx_MB": 332.8,
+    "adapted_source_modules": [
+      "web/frameSceneViewport.ts"
+    ]
+  },
+  "checks": {
+    "build": "passed",
+    "tests": 188,
+    "failed_tests": 0
+  },
+  "browser": {
+    "tested_origin": "http://127.0.0.1:5180/",
+    "isolated_database": true,
+    "real_ai": true,
+    "loaded_scenes": [
+      "lunar",
+      "window",
+      "ocean",
+      "bedroom",
+      "forest"
+    ],
+    "conversation_rounds": 2,
+    "cross_scene_context": "passed",
+    "character_click_focus": "passed",
+    "draft_preserved_on_switch_and_close": true,
+    "iframe_count_after_close": 0,
+    "visible_turns_after_close": 5,
+    "speech_toggle": "passed"
+  },
+  "limits": [
+    "No mobile-device performance benchmark was performed.",
+    "The original forest model is approximately 153 MB."
+  ],
+  "screenshots": [
+    "lunar-real-chat.jpg",
+    "lunar-chat-detail.jpg",
+    "ocean-real-chat.jpg",
+    "bedroom-chat.jpg",
+    "forest-chat.jpg"
+  ]
+}

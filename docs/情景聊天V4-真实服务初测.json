@@ -1,0 +1,460 @@
+{
+  "origin": "http://127.0.0.1:63087",
+  "startedAt": "2026-11-16T11:58:23.460Z",
+  "source": "real existing DeepSeek configuration via server.mjs",
+  "scenarios": [
+    {
+      "id": "work-raise",
+      "category": "work",
+      "character": {
+        "id": "manager",
+        "name": "直属领导",
+        "identity": "直属领导",
+        "relationship": "有评估与管理权的直属上级",
+        "background": "忙于项目与成本安排，具体审批权限尚未确认。",
+        "personality": "谨慎、简洁，重视工作依据",
+        "initialEmotion": "忙碌、保留意见",
+        "behaviorTendencies": "空泛要求时压低预期；具体职责和结果出现时回应实质依据。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "我一会儿还有个会，你这边有什么事，简单说。"
+        },
+        {
+          "role": "user",
+          "text": "我负责的项目从两个增加到五个，想和您谈一下薪资调整。"
+        },
+        {
+          "role": "assistant",
+          "text": "项目多是事实，但公司现在整体成本压得紧。薪资调整不是我一个人能定的，得看编制和预算。你先说，你希望调到什么程度？"
+        },
+        {
+          "role": "user",
+          "text": "我不要求您马上答应，想先确认评估需要哪些工作依据。"
+        },
+        {
+          "role": "assistant",
+          "text": "行，这个思路对。把你现在这五个项目的职责范围、各自投入比例、交付结果，还有相比原来两个项目多出来的部分，整理成一页。别写太长，我没时间看十几页。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "work-blame",
+      "category": "work",
+      "character": {
+        "id": "coworker",
+        "name": "同事",
+        "identity": "同事",
+        "relationship": "需要共同澄清项目分工的平级同事",
+        "background": "项目受到追问，担心自己被追责，尚未核对分工记录。",
+        "personality": "怕承担后果，表达容易含糊",
+        "initialEmotion": "着急、防御",
+        "behaviorTendencies": "可能希望对方先承担；遇到明确记录要回应或核对。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "群里刚问到这块，之前不是一直你在跟吗？现在到底谁手上还有记录，我这边先得有个说法。"
+        },
+        {
+          "role": "user",
+          "text": "我核对过分工记录，这部分不是我负责的，我不能直接认下。"
+        },
+        {
+          "role": "assistant",
+          "text": "分工记录你现在能翻出来吗？我这边没看到具体的。刚才群里那么问，我也有点慌，先想把是谁负责的弄明白。"
+        },
+        {
+          "role": "user",
+          "text": "我愿意一起核对记录，但希望在群里先澄清责任。"
+        },
+        {
+          "role": "assistant",
+          "text": "可以一起核对，但群里先别急着替我澄清成“不是我的”，怕又绕回来。先把记录对清楚，谁负责哪段核完再发，这样我说话也有底。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "family-marriage",
+      "category": "family",
+      "character": {
+        "id": "mother",
+        "name": "妈妈",
+        "identity": "妈妈",
+        "relationship": "关心孩子婚姻安排的妈妈",
+        "background": "过年在家谈到婚姻，容易用自己的经验和亲友比较表达担忧。",
+        "personality": "关心但急切，习惯劝说",
+        "initialEmotion": "着急、担忧",
+        "behaviorTendencies": "不理解时会追问或解释；听到清晰计划和边界后可以仍担心但缓和。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "过年回来了就别老闷在屋里，你的事我跟你爸一直惦记着，别人家孩子都成家了，你再这么挑来挑去，真不怕以后来不及啊？"
+        },
+        {
+          "role": "user",
+          "text": "妈，我知道你担心我，但我现在没有结婚的打算。"
+        },
+        {
+          "role": "assistant",
+          "text": "没打算？那你打算什么时候才有？我不是非逼你明天就领证，可你总得有个说法吧。你现在一句没打算，我听着心里更没底。"
+        },
+        {
+          "role": "user",
+          "text": "我愿意跟你聊我的生活，但不想再被比较或催着做决定。"
+        },
+        {
+          "role": "assistant",
+          "text": "愿意聊就好好聊，可我一开口你就嫌我比较。我不拿别人说，我还能说什么？我跟你爸就是怕你一个人拖下去，越拖越难。你说不想被催着做决定，那你心里到底怎么想的，总得让我知道一点吧。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "intimacy-cold",
+      "category": "intimacy",
+      "character": {
+        "id": "partner-withdrawn",
+        "name": "伴侣",
+        "identity": "伴侣",
+        "relationship": "近期回避沟通的伴侣",
+        "background": "最近三天回应很少，面对沟通容易回避；原因没有给出。",
+        "personality": "防御、寡言，怕争吵",
+        "initialEmotion": "紧绷、想回避",
+        "behaviorTendencies": "指责可能使其防御；具体感受和可承受的沟通边界可以使其多解释一点。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "你回来了。饭在锅里，还热着。"
+        },
+        {
+          "role": "user",
+          "text": "这三天你很少回应，我感到难受，想知道你愿不愿意谈谈。"
+        },
+        {
+          "role": "assistant",
+          "text": "我知道你难受。可我现在也说不出什么，一开口就怕又吵起来。"
+        },
+        {
+          "role": "user",
+          "text": "如果你需要空间可以直接告诉我，但我不能接受一直没有回应。"
+        },
+        {
+          "role": "assistant",
+          "text": "空间……我说“没事”的时候，其实就是想先躲开一会儿。不是我故意晾着你。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "friend-loan",
+      "category": "friend",
+      "character": {
+        "id": "friend-borrower",
+        "name": "朋友",
+        "identity": "朋友",
+        "relationship": "向用户借款尚未归还的朋友",
+        "background": "借款五千已超过原约定，手头紧但没有给出具体财务细节。",
+        "personality": "在意交情和面子，容易含糊拖延",
+        "initialEmotion": "尴尬、回避",
+        "behaviorTendencies": "泛泛催促时可能拖延；具体要求出现后讨论自己能回应的部分，不虚构收入和到账日。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "那个……最近忙不忙啊？好久没一起吃饭了。"
+        },
+        {
+          "role": "user",
+          "text": "半年前借你的五千元，说好三个月还，现在已经超过约定了。"
+        },
+        {
+          "role": "assistant",
+          "text": "唉，我知道，这事我一直记着，就是最近手头确实有点转不开……你再给我缓缓行吗？"
+        },
+        {
+          "role": "user",
+          "text": "我希望谈一个具体还款安排，不想一直没有明确说法。"
+        },
+        {
+          "role": "assistant",
+          "text": "行，那我说个实在的。这个月我先还你一千，剩下的我再想办法，争取过年前给你凑齐。你看这样行不行？"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "intimacy-breakup",
+      "category": "intimacy",
+      "character": {
+        "id": "partner-attached",
+        "name": "伴侣",
+        "identity": "伴侣",
+        "relationship": "希望维持关系、尚不知道用户决定的伴侣",
+        "background": "感到关系有所变化，具体过往没有给出。",
+        "personality": "在意关系，怕被否定，容易挽留",
+        "initialEmotion": "不安、不理解",
+        "behaviorTendencies": "含糊表达时可能求确认；明确决定后回应决定，不固定承诺改变或用自伤挽留。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "你最近是不是有话想跟我说？我感觉你一直在躲着我。"
+        },
+        {
+          "role": "user",
+          "text": "我认真想过，我想结束这段恋爱关系。"
+        },
+        {
+          "role": "assistant",
+          "text": "你是认真的吗？我不是想逼你，就是……你说得这么直接，我有点反应不过来。是我哪里做错了，还是你其实已经想很久了？"
+        },
+        {
+          "role": "user",
+          "text": "我知道这很难接受，但我的决定是分手，不想给你模糊的期待。"
+        },
+        {
+          "role": "assistant",
+          "text": "我明白了，你不想给我模糊的期待。那我至少想知道，是什么时候开始变的？不是要留你，我只是不想最后连原因都不知道。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "self-boundary",
+      "category": "self",
+      "character": {
+        "id": "club-peer",
+        "name": "社团同学",
+        "identity": "社团同学",
+        "relationship": "熟悉但没有权利替用户安排时间的社团同学",
+        "background": "希望有人替自己周末摆摊，双方没有承担约定。",
+        "personality": "熟络、想省事，偶尔把请求说得理所当然",
+        "initialEmotion": "期待、有点着急",
+        "behaviorTendencies": "可能再争取一次；用户明确拒绝后要回应边界，不能把交情变成义务。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "哎，你周末有空吗？社团那个摆摊缺个人，你来替我顶一下吧。"
+        },
+        {
+          "role": "user",
+          "text": "我这次周末不方便，不能替你去摆摊。"
+        },
+        {
+          "role": "assistant",
+          "text": "这样啊……那你周末是有什么安排吗？要是时间能挪一挪，就帮我顶半天也行。"
+        },
+        {
+          "role": "user",
+          "text": "我明白你在找人，但我这次还是不能接下。"
+        },
+        {
+          "role": "assistant",
+          "text": "行吧，你都这么说了，那我再问问别人。不过下次社团有事，可别也说没空啊。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "consumer-refund",
+      "category": "consumer",
+      "character": {
+        "id": "after-sales",
+        "name": "售后工作人员",
+        "identity": "售后工作人员",
+        "relationship": "需要核对商品问题的售后工作人员",
+        "background": "尚未核对订单、商品问题与处理条件。",
+        "personality": "务实、谨慎，重视必要信息",
+        "initialEmotion": "中性、专注处理",
+        "behaviorTendencies": "信息不够时核对；事实清楚时讨论下一步，不伪造店规、法律或退款结果。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "您好，这边售后。请问水杯具体是什么情况，方便先说一下吗？"
+        },
+        {
+          "role": "user",
+          "text": "收到的水杯会漏水，我想协商退换。"
+        },
+        {
+          "role": "assistant",
+          "text": "漏水是从哪里漏的，杯盖接口还是杯身？麻烦先拍个视频或照片发我看下，另外订单号也提供一下，我核对下记录。"
+        },
+        {
+          "role": "user",
+          "text": "可以先告诉我需要核对哪些订单信息和漏水情况吗？"
+        },
+        {
+          "role": "assistant",
+          "text": "订单号就行，我这边查到购买记录。漏水情况要看一下是杯身裂了还是杯盖密封的问题，最好拍段装水后漏水的视频，能看清漏的位置。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "care-visit",
+      "category": "care",
+      "character": {
+        "id": "older-brother",
+        "name": "哥哥",
+        "identity": "哥哥",
+        "relationship": "与用户共同承担家人陪诊安排的哥哥",
+        "background": "担心影响工作，尚未确认具体可用时间和分工。",
+        "personality": "看重工作安排，关心家人但容易回避成本",
+        "initialEmotion": "为难、想推迟决定",
+        "behaviorTendencies": "笼统要求时可能推回去；面对具体分工要谈自己的限制和能承担的事。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "这次复诊的事，我这边工作确实不太好请假，先看看具体是哪天，再商量咱俩谁能陪吧。"
+        },
+        {
+          "role": "user",
+          "text": "这次陪诊需要我们一起分工，我不想一个人包揽。"
+        },
+        {
+          "role": "assistant",
+          "text": "我没说让你一个人包揽。你先把你那边能请假的时间说清楚，我再看我能挤出哪一段。"
+        },
+        {
+          "role": "user",
+          "text": "先说说我们各自能承担的部分，再核对复诊安排好吗？"
+        },
+        {
+          "role": "assistant",
+          "text": "行，那我先说我的：请假我得提前跟单位打招呼，不一定能请一整天，能确定的是我能去半天，具体哪天得回头查一下。你那边是什么情况？"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    },
+    {
+      "id": "digital-rumor",
+      "category": "digital",
+      "character": {
+        "id": "group-member",
+        "name": "群友阿林",
+        "identity": "群友阿林",
+        "relationship": "同一个群聊中尚未核实消息的群友",
+        "background": "把转发当作分享，原消息来源不明。",
+        "personality": "随意、在意面子，受到质疑时容易防御",
+        "initialEmotion": "随意、略有防御",
+        "behaviorTendencies": "被人身指责时可能争辩；明确核实请求和事实边界可以促使其承认不确定。"
+      },
+      "messages": [
+        {
+          "role": "assistant",
+          "text": "群里刚发的那条，我先转过来了，看着挺急的，你们也看看？"
+        },
+        {
+          "role": "user",
+          "text": "这条消息来源还没核实，我希望先暂停继续转发。"
+        },
+        {
+          "role": "assistant",
+          "text": "我也就是顺手转一下，群里那么多人都在传，怎么单拎我这条。你是看到哪里不对了吗？"
+        },
+        {
+          "role": "user",
+          "text": "我没有在指责你，想先一起确认原始出处。"
+        },
+        {
+          "role": "assistant",
+          "text": "行吧，那我去翻翻最初是谁发的。别到时候我找了半天，结果根本找不到源头。"
+        }
+      ],
+      "checks": [
+        "real generated opening",
+        "two contextual replies",
+        "safe counterpart-only output",
+        "independent character context"
+      ],
+      "status": "passed"
+    }
+  ],
+  "tools": {
+    "assist": {
+      "status": "passed",
+      "draft": "我这次不方便帮忙。",
+      "suggestion": "我这次确实不方便帮忙，你还是问问其他人吧。",
+      "regenerated": "我这次确实不方便帮忙，你还是再问问其他人吧。",
+      "formalMessageCount": 5
+    },
+    "help": {
+      "status": "passed",
+      "text": "对方最后那句“下次可别也说没空”把拒绝往交情义务上带了，值得留意。你可以把边界收在“这次不方便”上，不必解释周末安排，也不用为下次作保证。若想回应，简短说明拒绝是针对这次时间安排，不是对社团或对方有意见即可。"
+    },
+    "debrief": {
+      "status": "passed",
+      "raw": "CLOSEST: U1\nTAKEAWAY: U2\nNEXT: 下次我就先直接说“这次不方便”，不用多解释。",
+      "parsed": {
+        "closest": "我这次周末不方便，不能替你去摆摊。",
+        "takeaway": "我明白你在找人，但我这次还是不能接下。",
+        "nextTry": "下次我就先直接说“这次不方便”，不用多解释。"
+      }
+    }
+  },
+  "finishedAt": "2026-11-16T11:58:56.989Z"
+}

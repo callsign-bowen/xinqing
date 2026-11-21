@@ -1,0 +1,25 @@
+{
+  "id": "SRC-XXX-000",
+  "name": "资源名称：用正式标题，不要只写“某篇文章”",
+  "url": null,
+  "localPath": null,
+  "author": "作者或机构",
+  "platform": "来源平台，如 中国青年报 / 豆瓣小组 / 客户访谈",
+  "language": "zh-CN",
+  "scale": "1 篇 / 12 万字 / 40 条对话",
+  "dataType": "报道",
+  "license": "版权保留（copyright-all）",
+  "licenseClass": "research_only",
+  "upstream": "上游来源或转载链，没有就留空字符串",
+  "commercialUse": false,
+  "modification": false,
+  "collectedAt": "2026-11-14",
+  "researchValue": "这份资料能提供什么：对方话术、回应结构、情绪节奏，写具体一点。",
+  "usageStatus": "reference_only",
+  "verification": {
+    "status": "pending",
+    "checkedAt": null,
+    "note": "许可证与原始网址待核对；未核对前不得进入 PRODUCTION_APPROVED。"
+  },
+  "notes": "登记说明：url 与 localPath 至少填一个；本地路径写相对项目根目录的路径。"
+}

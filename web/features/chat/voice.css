@@ -1,0 +1,8 @@
+.ai-input-row .ai-input{min-width:0;font-size:16px}
+.ai-voice{display:grid;place-items:center;flex:0 0 42px;width:42px;height:44px;padding:0;border:1px solid var(--line);border-radius:50%;background:var(--bg-card);color:var(--text);cursor:pointer;touch-action:manipulation}
+.ai-voice svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round}
+.ai-voice[aria-pressed=true]{background:var(--text);color:var(--bg);box-shadow:0 0 0 4px var(--soft)}
+.ai-voice:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.ai-voice-status{font-size:12px;line-height:1.6;color:var(--text);margin:0 0 9px;padding:10px 12px;background:var(--soft);border-radius:14px}
+.ai-voice-status[hidden]{display:none}
+@media(max-width:360px){.ai-input-row{gap:5px}.ai-input-row .ai-send,.ai-input-row .ai-plus,.ai-input-row .ai-voice{width:40px;flex-basis:40px}.ai-input-row .ai-input{padding-left:10px;padding-right:10px}}

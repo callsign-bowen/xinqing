@@ -1,0 +1,20 @@
+[
+  {
+    "asset": "models/lunar-camp.glb",
+    "bytes": 24433588,
+    "sha256": "E52A1D240A74EE2BF35E00AF180730DA532B60B1CAD073789F1D66ACEACF504E",
+    "matchesOriginal": true
+  },
+  {
+    "asset": "models/lunar-astronaut-supplied.glb",
+    "bytes": 4801656,
+    "sha256": "55827A4D189EF4969B5CDF12EE0FCAF12BE1EFB24D782548ABEFA15AA82AD4BC",
+    "matchesOriginal": true
+  },
+  {
+    "asset": "scenes/lunar/deep-sky-8k.jpg",
+    "bytes": 9641804,
+    "sha256": "94320125AAD4AE348872DEA886461CD086C0F832E946886D58F0BD77AC181EF1",
+    "matchesOriginal": true
+  }
+]
