@@ -21,6 +21,7 @@ window.addEventListener('message', event => {
     screenTheater.setEpisodes(Array.isArray(payload?.episodes) ? payload.episodes : [], typeof payload?.status === 'string' ? payload.status : '')
   }
   if (command === 'leave-screen') viewport?.leaveScreen?.()
+  if (command === 'chat' && (value === 'idle' || value === 'listen' || value === 'think' || value === 'talk')) viewport?.setChatMood?.(value)
   if (command === 'reset') viewport?.resetView()
   if (command === 'greet') viewport?.greet()
   if (command === 'reply') viewport?.reactToReply()
