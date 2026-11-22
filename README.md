@@ -20,6 +20,17 @@
 
 切换场景、关闭窗口或切换四个页面，不创建新的聊天，不清空输入草稿，也不改变原有图片、语音输入和历史会话功能。情景沟通演练继续保持未挂载状态。
 
+### 对话演绎（木偶默剧）
+
+每轮 AI 回复后，系统在后台把这段对话里讲到的人际冲突（例如和爸妈吵架）整理成一出木偶默剧：出场人物、每一拍的动作和表情、字幕卡台词。演绎**不会自动弹出**；这段对话有演绎时，AI 页顶部才出现「演绎」按钮，点开才播放，可以逐拍翻看、切换每一版、删除。
+
+- 后端：`POST /api/theater/script`（`account-service/theater.mjs` 负责提示词与结果校验）。只演用户讲过的事；用户转述的原话标为原话，概括的标「大意」；不知道对方说了什么就让对方沉默。高风险对话不排演。
+- 前端：`web/features/theater/`。剧本存在本机 `localStorage` 的 `nuo_theater`，每段对话最多保留 12 版。
+- 3D 场景里看演绎：AI 页「3D」→「月面观星」，点场景里的电视，镜头会飞到电视正前方，在电视屏幕上播放这段对话的演绎；点「离开电视」（或 Esc、「归位」）回到原来的视角。电视是用 Blender 建的模（`tools/blender/signal_tv.py`），信号接收锅锁定地球信号后电视才有画面。
+- 其他场景想加能播放演绎的物件：在 `scene-runtime/web/screenProps.ts` 登记一个 `ScreenProp`（点击范围、屏幕网格、机身朝向）即可，点击、镜头飞行和屏幕播放都是通用的。弹窗和电视共用同一个木偶舞台组件 `web/features/theater/stage.ts`。
+- 月面宇航员的动作（`tools/blender/astronaut_actions.py` 在 Blender 里生成 18 段动作 → `public/models/lunar-astronaut-actions.glb`，预览视频 `tools/blender/astronaut_actions_preview.mp4`）：待机呼吸 + 每 10～20 秒随机小动作；你打字时歪头听、等回复时托腮想、回复出来时比划着说；不聊天时每 20～40 秒在营地附近飘到另一个点；点他就是“戳”——戳头盔捂头、戳身体缩一下、戳手击掌、飘着时戳会在空中转一圈、3 秒连戳 3 下假装生气；点月面上的空地，他会飘过去（地上出现蓝色光圈），到了转身面向你，之后聊天也待在那里，点椅子、灯、电视等物件不会触发。行为逻辑在 `scene-runtime/web/astronautBrain.ts`。表情：Blender 在脸上加了一层贴合面罩里脸部的薄贴片（`Astronaut_Face`，绑在头骨上，原五官烘焙图 `tools/blender/astronaut_face_original.png`），场景里用画布实时画五官（`scene-runtime/web/astronautFace.ts`）：16 种表情跟着动作切换，平时随机眨眼、眼珠小幅转动，说话时嘴巴一张一合。
+- 人物素材：现在是分部件 SVG 占位木偶。正式素材放进 `public/theater/<角色>/`，在 `web/features/theater/cast.ts` 的 `PUPPET_ASSETS` 里登记即可替换。
+
 ## 下载与运行
 
 推荐使用 Node.js 24、Git 和 Git LFS。开发及验证环境为 Node.js 24.19.0。
@@ -63,6 +74,7 @@ npm run dev
 | `web/features/report/` | 情绪报告图表 |
 | `web/features/chat/` | 对话、最近对话侧栏、流式渲染、语音 |
 | `web/features/profile/` | 个人报告、昵称设置 |
+| `web/features/theater/` | 对话演绎：后台生成木偶默剧剧本、点开才播放的播放器、人物形象 |
 | `web/features/scene-window/` | AI 顶部的 3D 按钮、五个场景菜单、人物点击和聊天回复投影 |
 | `scene-runtime/` | 从 CBT初版复制的场景渲染依赖，在独立 iframe 内运行，不导入其应用外壳 |
 | `public/models/`、`public/scenes/`、`public/draco/` | 五个场景的运行模型、贴图和解码器 |

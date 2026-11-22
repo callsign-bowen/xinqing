@@ -9,6 +9,10 @@ export type NuoEventMap = {
   'mascot.changed': { id: string }
   'chat.risk': { level: 'low' | 'medium' | 'high' }
   'chat.userSaid': { text: string }
+  /** 一轮对话（用户一句 + AI 回复）已保存到这段会话。高风险轮次不发。 */
+  'chat.roundDelivered': { sessionId: string }
+  /** 当前对话的演绎有变化（排好新一版、开始/结束排演、被删除）。 */
+  'theater.updated': { sessionId: string }
   'chat.contextChanged': { sessionId: string }
   'profile.updated': { source: 'intro' | 'chat' }
   'account.nicknameChanged': { nickname: string }

@@ -1,0 +1,126 @@
+/* 木偶舞台：弹窗播放器和 3D 场景里的电视共用。实体剧场配色，不随主题变。 */
+.theater-view { position: relative; }
+.theater-view [hidden] { display: none !important; }
+.theater-sign:empty { display: none; }
+.theater-intertitle small { line-height: 1.6; }
+.theater-stage { position: relative; width: 100%; aspect-ratio: 16 / 10; max-height: 56dvh; overflow: hidden; border-radius: 14px; background: #2a1c16; box-shadow: inset 0 0 0 6px #6b4126, inset 0 0 0 9px #3d2416; isolation: isolate; }
+.theater-wall { position: absolute; inset: 0 0 18% 0; background: radial-gradient(ellipse at 50% 30%, #e8d6b8 0%, #c9ab83 55%, #8a6a4c 100%); }
+.theater-floor { position: absolute; inset: auto 0 0 0; height: 20%; background: repeating-linear-gradient(90deg, #8b5a36 0 11%, #7a4d2d 11% 11.6%), #8b5a36; box-shadow: inset 0 6px 10px #0004; }
+.theater-sign { position: absolute; z-index: 1; top: 13%; left: 50%; max-width: 70%; padding: 3px 12px; border-radius: 4px; color: #4b3424; background: #f4e7cf; box-shadow: 0 2px 0 #0002; font-size: 12px; transform: translateX(-50%); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.theater-spot { position: absolute; z-index: 1; top: 0; bottom: 0; left: var(--x, 50%); width: 34%; background: radial-gradient(ellipse 50% 60% at 50% 72%, #fff6d955, transparent 70%); transform: translateX(-50%); transition: left .9s ease, opacity .4s ease; pointer-events: none; opacity: 0; }
+.theater-cast { position: absolute; z-index: 2; inset: 0; }
+.theater-valance { position: absolute; z-index: 4; inset: 0 0 auto 0; height: 11%; background: radial-gradient(circle at 50% 100%, transparent 62%, #8e1f24 63%) 0 0 / 8% 100% repeat-x, linear-gradient(#a8262c, #8e1f24); box-shadow: 0 3px 6px #0005; }
+.theater-curtain { position: absolute; z-index: 3; top: 0; bottom: 0; width: 52%; background: repeating-linear-gradient(90deg, #9e2329 0 4%, #7c171c 6%, #9e2329 8%); box-shadow: 0 0 18px #0007; transition: transform 1.1s cubic-bezier(.6, .1, .3, 1); }
+.theater-curtain-l { left: 0; transform-origin: left; }
+.theater-curtain-r { right: 0; transform-origin: right; }
+.theater-stage[data-state='open'] .theater-curtain-l { transform: translateX(-92%); }
+.theater-stage[data-state='open'] .theater-curtain-r { transform: translateX(92%); }
+.theater-intertitle { position: absolute; z-index: 5; top: 50%; left: 50%; display: flex; flex-direction: column; align-items: center; gap: 6px; min-width: 46%; max-width: 78%; padding: 16px 22px; border: 3px double #e8d6b0; border-radius: 6px; color: #f4ead6; background: #1c1714ee; text-align: center; transform: translate(-50%, -50%); font-family: "Songti SC", "STSong", "SimSun", serif; }
+.theater-intertitle strong { font-size: clamp(18px, 4vw, 26px); font-weight: 500; letter-spacing: .08em; }
+.theater-intertitle small { color: #cdbf9f; font-size: 12px; }
+.theater-shake { animation: th-shake .35s ease 1; }
+
+/* ===== 字幕卡（默剧的台词） ===== */
+.theater-caption { display: flex; min-height: 64px; flex-direction: column; justify-content: center; gap: 2px; margin-top: 10px; padding: 10px 14px; border-radius: 10px; color: #f4ead6; background: #1c1714; font-family: "Songti SC", "STSong", "SimSun", serif; }
+.theater-caption[data-empty='true'] { opacity: .35; }
+.theater-caption-name { color: #cdbf9f; font-size: 12px; font-family: inherit; }
+.theater-caption-line { margin: 0; font-size: 17px; line-height: 1.6; overflow-wrap: anywhere; }
+.theater-caption[data-loud='true'] .theater-caption-line { font-size: 20px; font-weight: 600; letter-spacing: .03em; }
+.theater-caption-line em { margin-left: 6px; padding: 1px 6px; border: 1px solid #cdbf9f88; border-radius: 6px; color: #cdbf9f; font-size: 11px; font-style: normal; vertical-align: middle; }
+
+/* ===== 木偶 ===== */
+.theater-puppet { position: absolute; top: 0; bottom: 6%; left: var(--x, 50%); width: 17%; transform: translateX(-50%); transition: left .9s cubic-bezier(.45, .05, .35, 1), opacity .4s ease; }
+.theater-puppet[data-offstage='true'] { opacity: 0; }
+.theater-puppet .puppet-control { position: absolute; top: 0; left: 50%; width: 78%; height: 3.5%; border-radius: 3px; background: linear-gradient(#a7774c, #7a5230); box-shadow: 0 2px 2px #0004; transform: translateX(-50%); animation: th-bob 2.8s ease-in-out infinite; }
+.theater-puppet .puppet-control span { position: absolute; top: -60%; left: 46%; width: 8%; height: 220%; border-radius: 2px; background: #7a5230; }
+.puppet-strings { position: absolute; top: 3.5%; left: 0; right: 0; height: 26%; animation: th-bob 2.8s ease-in-out infinite; }
+.puppet-strings i { position: absolute; top: 0; bottom: 0; width: 1px; background: #f6efe399; }
+.puppet-strings i:nth-child(1) { left: 50%; }
+.puppet-strings i:nth-child(2) { left: 18%; bottom: -22%; }
+.puppet-strings i:nth-child(3) { left: 82%; bottom: -22%; }
+.puppet-body { position: absolute; left: 0; right: 0; bottom: 6%; height: 70%; animation: th-bob 2.8s ease-in-out infinite; }
+.puppet-svg, .puppet-full { display: block; width: 100%; height: 100%; overflow: visible; object-fit: contain; filter: drop-shadow(0 4px 3px #0004); }
+.theater-puppet[data-active='true'] .puppet-svg, .theater-puppet[data-active='true'] .puppet-full { filter: drop-shadow(0 0 6px #fff7) drop-shadow(0 4px 3px #0004); }
+.puppet-name { position: absolute; bottom: 0; left: 50%; padding: 1px 7px; border-radius: 8px; color: #f4ead6; background: #1c1714c0; font-size: 11px; white-space: nowrap; transform: translateX(-50%); }
+.puppet-svg g { transform-box: view-box; }
+.puppet-flip { transform-origin: 60px 120px; transition: transform .45s ease; }
+.theater-puppet[data-facing='-1'] .puppet-flip { transform: scaleX(-1); }
+.puppet-lean { transform-origin: 60px 222px; transition: transform .5s ease; }
+.puppet-svg [data-part] { transition: transform .45s ease; }
+.puppet-cheeks, .puppet-tears { opacity: 0; transition: opacity .4s ease; }
+.theater-puppet[data-mood='angry'] .puppet-cheeks { opacity: .8; }
+.theater-puppet[data-mood='hurt'] .puppet-cheeks, .theater-puppet[data-mood='anxious'] .puppet-cheeks { opacity: .35; }
+.theater-puppet[data-act='cry'] .puppet-tears { opacity: 1; animation: th-tears 1s ease-in infinite; }
+
+/* 动作：只动部件，保持姿势到下一拍 */
+[data-act='speak'] [data-part='head'] { animation: th-talk .6s ease-in-out 3; }
+[data-act='speak'] [data-part='armR'] { animation: th-gesture 1.6s ease-in-out 1 forwards; }
+[data-act='shout'] .puppet-lean { transform: rotate(7deg); }
+[data-act='shout'] [data-part='head'] { animation: th-shake-head .28s ease-in-out 5; }
+[data-act='shout'] [data-part='armL'] { transform: rotate(-35deg); }
+[data-act='shout'] [data-part='armR'] { transform: rotate(-60deg); }
+[data-act='point'] [data-part='armR'] { transform: rotate(-95deg); }
+[data-act='point'] .puppet-lean { transform: rotate(4deg); }
+[data-act='cross_arms'] [data-part='armL'] { transform: rotate(-64deg); }
+[data-act='cross_arms'] [data-part='armR'] { transform: rotate(64deg); }
+[data-act='cross_arms'] [data-part='head'] { transform: rotate(-6deg); }
+[data-act='turn_away'] [data-part='head'] { transform: rotate(8deg); }
+[data-act='turn_away'] .puppet-lean { transform: rotate(-3deg); }
+[data-act='step_forward'] [data-part='legL'], [data-act='step_back'] [data-part='legL'],
+[data-act='enter'] [data-part='legL'], [data-act='exit'] [data-part='legL'] { animation: th-walk .45s ease-in-out 2; }
+[data-act='step_forward'] [data-part='legR'], [data-act='step_back'] [data-part='legR'],
+[data-act='enter'] [data-part='legR'], [data-act='exit'] [data-part='legR'] { animation: th-walk .45s ease-in-out 2 reverse; }
+[data-act='step_forward'] .puppet-lean { transform: rotate(5deg); }
+[data-act='step_back'] .puppet-lean { transform: rotate(-5deg); }
+[data-act='stomp'] [data-part='legR'] { animation: th-stomp .7s cubic-bezier(.5, 0, .9, .4) 2; }
+[data-act='stomp'] [data-part='armL'] { transform: rotate(-20deg); }
+[data-act='stomp'] [data-part='armR'] { transform: rotate(20deg); }
+[data-act='slump'] [data-part='head'] { transform: translateY(5px) rotate(16deg); }
+[data-act='slump'] .puppet-lean { transform: translateY(6px) rotate(-2deg); }
+[data-act='slump'] [data-part='armL'] { transform: rotate(4deg); }
+[data-act='slump'] [data-part='armR'] { transform: rotate(-4deg); }
+[data-act='cry'] [data-part='head'] { transform: translateY(3px) rotate(10deg); }
+[data-act='cry'] [data-part='armL'] { transform: rotate(-150deg); }
+[data-act='cry'] [data-part='armR'] { transform: rotate(150deg); }
+[data-act='cry'] .puppet-lean { animation: th-sob .9s ease-in-out infinite; }
+[data-act='shake_head'] [data-part='head'] { animation: th-shake-head .45s ease-in-out 4; }
+[data-act='nod'] [data-part='head'] { animation: th-nod .55s ease-in-out 3; }
+[data-act='sigh'] .puppet-lean { animation: th-sigh 2s ease-in-out 1 forwards; }
+[data-act='sigh'] [data-part='head'] { transform: rotate(9deg); }
+.theater-puppet[data-act='freeze'] .puppet-body, .theater-puppet[data-act='freeze'] .puppet-strings, .theater-puppet[data-act='freeze'] .puppet-control { animation: none; }
+[data-act='freeze'] .puppet-svg { filter: saturate(.45) drop-shadow(0 4px 3px #0004); }
+[data-act='wave_off'] [data-part='armR'] { animation: th-wave .5s ease-in-out 4 alternate; transform: rotate(-90deg); }
+[data-act='wave_off'] [data-part='head'] { transform: rotate(-8deg); }
+[data-act='hold_head'] [data-part='armL'] { transform: rotate(-168deg); }
+[data-act='hold_head'] [data-part='armR'] { transform: rotate(168deg); }
+[data-act='hold_head'] [data-part='head'] { animation: th-shake-head .6s ease-in-out 3; }
+
+@keyframes th-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.4%); } }
+@keyframes th-talk { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-4deg); } 70% { transform: rotate(3deg); } }
+@keyframes th-gesture { 0% { transform: rotate(0); } 35%, 70% { transform: rotate(-45deg); } 100% { transform: rotate(-20deg); } }
+@keyframes th-shake-head { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
+@keyframes th-nod { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(4px) rotate(7deg); } }
+@keyframes th-walk { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(16deg); } }
+@keyframes th-stomp { 0% { transform: rotate(0) translateY(0); } 45% { transform: rotate(-28deg) translateY(-10px); } 70%, 100% { transform: rotate(0) translateY(0); } }
+@keyframes th-sob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(2px); } }
+@keyframes th-sigh { 0% { transform: translateY(0) scaleY(1); } 40% { transform: translateY(-3px) scaleY(1.02); } 100% { transform: translateY(5px) scaleY(.97); } }
+@keyframes th-wave { from { transform: rotate(-120deg); } to { transform: rotate(-70deg); } }
+@keyframes th-tears { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+@keyframes th-shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+
+/* 铺满容器（电视屏幕里）：没有外框圆角，字号跟着容器走，字幕压在画面下方 */
+.theater-view[data-fit='fill'] { width: 100%; height: 100%; }
+.theater-view[data-fit='fill'] .theater-stage { container-type: size; width: 100%; height: 100%; aspect-ratio: auto; max-height: none; border-radius: 0; box-shadow: none; }
+.theater-view[data-fit='fill'] .theater-intertitle { padding: 3cqh 4cqw; border-width: 2px; }
+.theater-view[data-fit='fill'] .theater-intertitle strong { font-size: clamp(11px, 7cqw, 26px); }
+.theater-view[data-fit='fill'] .theater-intertitle small { font-size: clamp(8px, 3.6cqw, 13px); }
+/* 电视里地点已经在标题卡上出现过，顶部让给字幕 */
+.theater-view[data-fit='fill'] .theater-sign { display: none; }
+.theater-view[data-fit='fill'] .puppet-name { font-size: clamp(7px, 3cqw, 11px); }
+.theater-view[data-caption='inside'] .theater-caption { position: absolute; z-index: 6; left: 4%; right: 4%; top: 13%; min-height: 0; margin: 0; padding: .5em .8em; border-radius: 6px; background: #1c1714d9; font-size: clamp(9px, 2.6vmin, 16px); }
+.theater-view[data-caption='inside'] .theater-caption-name { font-size: .75em; }
+.theater-view[data-caption='inside'] .theater-caption-line { font-size: 1em; line-height: 1.45; }
+.theater-view[data-caption='inside'] .theater-caption[data-loud='true'] .theater-caption-line { font-size: 1.12em; }
+.theater-view[data-caption='inside'] .theater-caption[data-empty='true'] { display: none; }
+@media (max-width: 520px) { .theater-view:not([data-fit]) .theater-stage { aspect-ratio: 4 / 3.4; } .theater-puppet { width: 22%; } .theater-caption-line { font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { .theater-view *, .theater-view *::before, .theater-view *::after { animation: none !important; transition: none !important; } }

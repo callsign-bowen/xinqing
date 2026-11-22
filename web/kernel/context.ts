@@ -67,6 +67,14 @@ export interface SceneService {
   removeBySession(sessionId: string): void
 }
 
+/** 对话演绎（木偶默剧）。3D 场景里的电视通过这里取当前这段对话的演绎，不 import theater 文件夹。 */
+export interface TheaterService {
+  /** 当前这段对话的全部演绎，最新一版在最后；结构由 features/theater/stage.ts 定义。 */
+  episodes(): unknown[]
+  /** 正在后台排演时是一句说明，否则为空字符串。 */
+  status(): string
+}
+
 export interface ServiceRegistry {
   ambient?: {
     openScene(kind: 'forest'|'ocean'|'window'|'lunar'|'bedroom'): Promise<boolean>
@@ -79,6 +87,7 @@ export interface ServiceRegistry {
   profile?: ProfileService
   chat?: ChatService
   scene?: SceneService
+  theater?: TheaterService
 }
 
 export interface AppContext {

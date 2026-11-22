@@ -21,6 +21,7 @@ import { crisisFeature } from './features/crisis'
 import { energyFeature } from './features/energy'
 import { onboardingFeature } from './features/onboarding'
 import { encourageFeature } from './features/encourage'
+import { theaterFeature } from './features/theater'
 
 const FEATURES: Feature[] = [
   shellFeature,
@@ -36,7 +37,8 @@ const FEATURES: Feature[] = [
   onboardingFeature,
   encourageFeature,
   shellSwapFeature,
-  sceneWindowFeature
+  sceneWindowFeature,
+  theaterFeature
 ]
 
 function boot(): void {

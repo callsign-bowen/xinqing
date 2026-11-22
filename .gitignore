@@ -34,3 +34,6 @@ __pycache__/
 /实验报告/
 **/.delivery-qa/
 .local-backups/
+
+# Blender auto backups
+*.blend1

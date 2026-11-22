@@ -76,7 +76,7 @@ export async function startIsolatedService({ respond, staticDir = '', sourceRoot
     await fs.rm(resolved, { recursive: true, force: true })
   }
   try {
-    for (const file of ['server.mjs', 'db.mjs', 'guidance.mjs', 'chat-context.mjs', 'completion-messages.mjs', 'completion-diagnostics.mjs']) {
+    for (const file of ['server.mjs', 'db.mjs', 'guidance.mjs', 'chat-context.mjs', 'completion-messages.mjs', 'completion-diagnostics.mjs', 'theater.mjs']) {
       await fs.copyFile(path.join(sourceRoot, file), path.join(directory, file))
     }
     try { await fs.copyFile(path.join(sourceRoot, 'dialogue-style.mjs'), path.join(directory, 'dialogue-style.mjs')) }

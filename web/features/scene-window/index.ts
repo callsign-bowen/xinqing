@@ -43,7 +43,12 @@ export const sceneWindowFeature: Feature = {
     let timeout: ReturnType<typeof setTimeout> | undefined
     let selected: SceneId | undefined
     const visible = () => !stage.hidden && page.classList.contains('ai-page-visible') && !document.hidden
-    const command = (command: string, value?: boolean) => frame?.contentWindow?.postMessage({ type: 'xinqing-3d:command', command, value }, location.origin)
+    const command = (command: string, value?: unknown) => frame?.contentWindow?.postMessage({ type: 'xinqing-3d:command', command, value }, location.origin)
+    /** 场景里的电视正在播放时，把当前这段对话的演绎送进去；排好新一版时再送一次。 */
+    function sendTheater() {
+      if (stage.dataset.watching !== 'true') return
+      command('theater', { episodes: ctx.services.theater?.episodes() ?? [], status: ctx.services.theater?.status() ?? '' })
+    }
     function focusChat() {
       if (!visible()) return
       input!.focus({ preventScroll: true })
@@ -64,7 +69,16 @@ export const sceneWindowFeature: Feature = {
       speech.hidden = !showSpeech
       hint.hidden = false
     }
+    /** 告诉场景里的伙伴聊天进行到哪一步：打字 → 在听，等回复 → 在想；回复出来由 'reply' 触发“在说”。 */
+    let lastMood = ''
+    function syncChatMood() {
+      if (stage.dataset.state !== 'ready') return
+      const pending = ctx.services.chat?.practiceContext().pending === true
+      const mood = pending ? 'think' : input!.value.trim() && document.activeElement === input ? 'listen' : 'idle'
+      if (mood !== lastMood) { lastMood = mood; command('chat', mood) }
+    }
     function syncChatProgress() {
+      syncChatMood()
       const current = ctx.services.chat?.practiceContext()
       if (!current) return
       const next = { sessionId: current.sessionId, pending: current.pending, assistantCount: current.messages.filter(turn => turn.role === 'assistant').length }
@@ -80,6 +94,8 @@ export const sceneWindowFeature: Feature = {
       command('dispose'); loading?.abort(); clearTimeout(timeout); frame?.remove(); frame = undefined
       speech.hidden = hint.hidden = true
       delete speech.dataset.side
+      delete stage.dataset.watching
+      hint.textContent = '点伙伴聊聊 · 拖动环视'
     }
     function closeWindow() {
       release(); selected = undefined; stage.hidden = true; delete stage.dataset.scene; delete stage.dataset.state
@@ -110,10 +126,19 @@ export const sceneWindowFeature: Feature = {
         if (event.data?.type === 'xinqing-3d:ready') {
           clearTimeout(timeout); stage.dataset.state = 'ready'; status.hidden = true
           controls.forEach(control => { control.disabled = false }); command('active', visible()); syncSpeech()
+          lastMood = ''; syncChatMood()
+          if (selected === 'lunar') hint.textContent = '戳他 · 点地面叫他过去'
         }
         if (event.data?.type === 'xinqing-3d:error') { clearTimeout(timeout); failed() }
         if (event.data?.type === 'xinqing-3d:close') closeWindow()
         if (event.data?.type === 'xinqing-3d:activate') focusChat()
+        if (event.data?.type === 'xinqing-3d:screens' && Array.isArray(event.data.labels) && event.data.labels.length) {
+          hint.textContent = `${selected === 'lunar' ? '戳他 · 点地面叫他过去' : '点伙伴聊聊'} · 点${String(event.data.labels[0]).slice(0, 6)}看演绎`
+        }
+        if (event.data?.type === 'xinqing-3d:screen') {
+          if (event.data.state === 'watching') { stage.dataset.watching = 'true'; sendTheater() }
+          else delete stage.dataset.watching
+        }
         if (event.data?.type === 'xinqing-3d:anchor') {
           const point = sceneAnchor(event.data)
           if (point) speech.dataset.side = point.visible && point.x > .5 ? 'left' : 'right'
@@ -153,8 +178,12 @@ export const sceneWindowFeature: Feature = {
     const chatObserver = new MutationObserver(syncSpeech)
     chatObserver.observe(messages, { childList: true, subtree: true, characterData: true })
     const unsubscribe = ctx.events.on('chat.contextChanged', syncChatProgress)
+    const unsubscribeTheater = ctx.events.on('theater.updated', sendTheater)
+    input.addEventListener('input', syncChatMood)
+    input.addEventListener('focus', syncChatMood)
+    input.addEventListener('blur', syncChatMood)
     syncChatProgress()
-    window.addEventListener('pagehide', event => { if (event.persisted) command('active', false); else { release(); observer.disconnect(); chatObserver.disconnect(); unsubscribe() } })
+    window.addEventListener('pagehide', event => { if (event.persisted) command('active', false); else { release(); observer.disconnect(); chatObserver.disconnect(); unsubscribe(); unsubscribeTheater() } })
     window.addEventListener('pageshow', sync)
   }
 }
