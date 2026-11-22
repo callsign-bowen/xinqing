@@ -88,6 +88,10 @@ export interface NuoApi {
   ai: {
     complete(messages: AiMessage[], opts?: { temperature?: number; maxTokens?: number; contextMode?: 'scenario-full'; signal?: AbortSignal; onDiagnostic?: (data: AiDiagnostic) => void }): Promise<string>
   }
+  theater: {
+    /** 演绎系统：把这段对话整理成木偶默剧剧本；没有人际场景时 script 为 null。结构由 features/theater 校验。 */
+    script(history: Array<{ role: 'user' | 'assistant'; text: string }>, previous?: unknown, signal?: AbortSignal): Promise<{ script: unknown | null }>
+  }
 }
 
 const AUTH_TOKEN_KEY = 'nuo_auth_token'
@@ -274,6 +278,13 @@ export function createApi(): NuoApi {
       },
       resources() {
         return requestJson('/api/v1/crisis/resources', {}, 5000)
+      }
+    },
+    theater: {
+      script(history, previous, signal) {
+        return requestJson<{ script: unknown | null }>('/api/theater/script', {
+          method: 'POST', signal, body: JSON.stringify({ history, previous: previous ?? null })
+        }, 70_000)
       }
     },
     ai: {

@@ -43,7 +43,12 @@ export const sceneWindowFeature: Feature = {
     let timeout: ReturnType<typeof setTimeout> | undefined
     let selected: SceneId | undefined
     const visible = () => !stage.hidden && page.classList.contains('ai-page-visible') && !document.hidden
-    const command = (command: string, value?: boolean) => frame?.contentWindow?.postMessage({ type: 'xinqing-3d:command', command, value }, location.origin)
+    const command = (command: string, value?: unknown) => frame?.contentWindow?.postMessage({ type: 'xinqing-3d:command', command, value }, location.origin)
+    /** 场景里的电视正在播放时，把当前这段对话的演绎送进去；排好新一版时再送一次。 */
+    function sendTheater() {
+      if (stage.dataset.watching !== 'true') return
+      command('theater', { episodes: ctx.services.theater?.episodes() ?? [], status: ctx.services.theater?.status() ?? '' })
+    }
     function focusChat() {
       if (!visible()) return
       input!.focus({ preventScroll: true })
@@ -80,6 +85,8 @@ export const sceneWindowFeature: Feature = {
       command('dispose'); loading?.abort(); clearTimeout(timeout); frame?.remove(); frame = undefined
       speech.hidden = hint.hidden = true
       delete speech.dataset.side
+      delete stage.dataset.watching
+      hint.textContent = '点伙伴聊聊 · 拖动环视'
     }
     function closeWindow() {
       release(); selected = undefined; stage.hidden = true; delete stage.dataset.scene; delete stage.dataset.state
@@ -114,6 +121,13 @@ export const sceneWindowFeature: Feature = {
         if (event.data?.type === 'xinqing-3d:error') { clearTimeout(timeout); failed() }
         if (event.data?.type === 'xinqing-3d:close') closeWindow()
         if (event.data?.type === 'xinqing-3d:activate') focusChat()
+        if (event.data?.type === 'xinqing-3d:screens' && Array.isArray(event.data.labels) && event.data.labels.length) {
+          hint.textContent = `点伙伴聊聊 · 点${String(event.data.labels[0]).slice(0, 6)}看演绎`
+        }
+        if (event.data?.type === 'xinqing-3d:screen') {
+          if (event.data.state === 'watching') { stage.dataset.watching = 'true'; sendTheater() }
+          else delete stage.dataset.watching
+        }
         if (event.data?.type === 'xinqing-3d:anchor') {
           const point = sceneAnchor(event.data)
           if (point) speech.dataset.side = point.visible && point.x > .5 ? 'left' : 'right'
@@ -153,8 +167,9 @@ export const sceneWindowFeature: Feature = {
     const chatObserver = new MutationObserver(syncSpeech)
     chatObserver.observe(messages, { childList: true, subtree: true, characterData: true })
     const unsubscribe = ctx.events.on('chat.contextChanged', syncChatProgress)
+    const unsubscribeTheater = ctx.events.on('theater.updated', sendTheater)
     syncChatProgress()
-    window.addEventListener('pagehide', event => { if (event.persisted) command('active', false); else { release(); observer.disconnect(); chatObserver.disconnect(); unsubscribe() } })
+    window.addEventListener('pagehide', event => { if (event.persisted) command('active', false); else { release(); observer.disconnect(); chatObserver.disconnect(); unsubscribe(); unsubscribeTheater() } })
     window.addEventListener('pageshow', sync)
   }
 }

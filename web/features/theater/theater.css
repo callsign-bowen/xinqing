@@ -1,0 +1,40 @@
+/* ===== 入口按钮：有演绎时才出现，样式跟 3D 按钮一致 ===== */
+.ai-theater-button { min-height: 32px; margin-left: 6px; padding: 4px 12px; border: 1px solid var(--line); border-radius: 18px; color: var(--text); background: var(--bg); font: inherit; font-size: 14px; white-space: nowrap; }
+.ai-theater-button[aria-expanded='true'] { background: var(--soft); }
+.ai-theater-button[data-busy='true']::after { content: ''; display: inline-block; width: 6px; height: 6px; margin-left: 6px; border-radius: 50%; background: var(--primary, #75957d); vertical-align: middle; animation: th-pulse 1.4s ease-in-out infinite; }
+.theater-modal[data-empty='true'] :is(.theater-episodes, .theater-caption, .theater-controls, .theater-unknown, [data-theater-delete]) { display: none !important; }
+.ai-theater-button[hidden], .theater-modal[hidden], .theater-modal [hidden] { display: none !important; }
+html.theater-locked { overflow: hidden; }
+
+/* ===== 弹窗 ===== */
+.theater-modal { position: fixed; inset: 0; z-index: 120; display: flex; align-items: center; justify-content: center; padding: 16px; background: rgba(12, 10, 9, .55); }
+.theater-sheet { width: 100%; max-width: 760px; max-height: calc(100dvh - 32px); overflow-y: auto; padding: 14px 16px 12px; border-radius: 22px; color: var(--text); background: var(--bg); box-shadow: 0 18px 48px #0005; }
+.theater-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.theater-head strong { display: block; font-size: 17px; font-weight: 500; }
+.theater-head span { display: block; margin-top: 2px; color: var(--muted); font-size: 12px; }
+.theater-x { flex: 0 0 auto; width: 34px; height: 34px; border: 0; border-radius: 50%; color: var(--text); background: var(--soft); font-size: 22px; line-height: 1; cursor: pointer; }
+.theater-episodes { display: flex; gap: 6px; margin-bottom: 10px; overflow-x: auto; scrollbar-width: thin; }
+.theater-episodes button { display: flex; flex: 0 0 auto; flex-direction: column; align-items: flex-start; gap: 1px; padding: 6px 11px; border: 1px solid var(--line); border-radius: 12px; color: var(--text); background: transparent; font: inherit; font-size: 13px; cursor: pointer; }
+.theater-episodes button small { max-width: 9em; overflow: hidden; color: var(--muted); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.theater-episodes button[aria-selected='true'] { border-color: var(--primary, #75957d); background: var(--soft); }
+
+.theater-controls { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+.theater-controls button { min-width: 40px; height: 36px; border: 1px solid var(--line); border-radius: 18px; color: var(--text); background: transparent; font: inherit; font-size: 16px; cursor: pointer; }
+.theater-controls .theater-play { min-width: 56px; background: var(--soft); }
+.theater-progress { margin-left: auto; color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; }
+.theater-unknown { margin: 10px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.theater-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+.theater-status { color: var(--muted); font-size: 12px; }
+.theater-foot button { margin-left: auto; padding: 5px 10px; border: 0; border-radius: 10px; color: var(--muted); background: transparent; font: inherit; font-size: 12px; cursor: pointer; }
+.theater-foot button:hover { color: #b55; background: var(--soft); }
+.theater-sheet button:focus-visible, .ai-theater-button:focus-visible { outline: 2px solid var(--primary, #75957d); outline-offset: 2px; }
+
+@keyframes th-pulse { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+
+@media (max-width: 520px) {
+  .theater-modal { align-items: flex-end; padding: 0; }
+  .theater-sheet { max-height: 96dvh; padding: 12px 12px 10px; border-radius: 20px 20px 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theater-sheet *, .theater-sheet *::before, .theater-sheet *::after { animation: none !important; transition: none !important; }
+}

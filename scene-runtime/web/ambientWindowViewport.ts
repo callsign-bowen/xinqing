@@ -4,6 +4,8 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { refineRoomMaterials } from './bedroomMaterials';
 import { addSceneDog, type SceneDog } from './sceneDog';
+import { loadSignalTv, type SignalTv } from './lunarSignalTv';
+import { pickScreen, screenRect, watchPose, type ScreenProp } from './screenProps';
 
 export interface WindowViewport {
   resume(): void;
@@ -13,13 +15,24 @@ export interface WindowViewport {
   greet(): void;
   greetDog(): boolean;
   talkDog(): boolean;
+  /** 正在看电视时回到原来的视角 */
+  leaveScreen?(): void;
   dispose(): void;
 }
+
+/** 镜头飞向 / 离开可播放物件的过程 */
+interface ScreenWatch {
+  prop: ScreenProp;
+  fromPosition: THREE.Vector3; fromQuaternion: THREE.Quaternion;
+  toPosition: THREE.Vector3; toQuaternion: THREE.Quaternion;
+  start: number; leaving: boolean; arrived: boolean;
+}
+const WATCH_FLIGHT_MS = 1100;
 
 export type AmbientSceneKind = 'window' | 'lunar' | 'forest' | 'ocean' | 'bedroom';
 export type WindowCompanion = 'dog' | 'kitten';
 
-const interactive = 'button,a,input,textarea,select,summary,[contenteditable="true"],[role="button"],.ai-messages,.ai-input-area,.ai-header,.ai-action-row,.ambient-controls,.ambient-speech';
+const interactive = 'button,a,input,textarea,select,summary,[contenteditable="true"],[role="button"],.screen-theater,.screen-theater-bar,.ai-messages,.ai-input-area,.ai-header,.ai-action-row,.ambient-controls,.ambient-speech';
 const frameInterval = 1000 / 30;
 
 /** A seated, full 360-degree view of the Blender room, independent of the chat workflow. */
@@ -70,6 +83,59 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
   let targetYaw = 0, targetPitch = 0, yaw = 0, pitch = 0;
   let pointer: number | undefined, pointerX = 0, pointerY = 0;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const screens: ScreenProp[] = [];
+  let watch: ScreenWatch | undefined;
+  const homePosition = camera.position.clone();
+  const pickRay = new THREE.Raycaster();
+
+  function rayFrom(event: PointerEvent): THREE.Raycaster {
+    const rect = host.getBoundingClientRect();
+    camera.updateMatrixWorld(true);
+    pickRay.setFromCamera(new THREE.Vector2((event.clientX - rect.left) / rect.width * 2 - 1, 1 - (event.clientY - rect.top) / rect.height * 2), camera);
+    return pickRay;
+  }
+
+  function emitScreen(type: 'ambient-screen-watch' | 'ambient-screen-rect', prop: ScreenProp): void {
+    const rect = screenRect(prop, camera, Math.max(1, host.clientWidth), Math.max(1, host.clientHeight));
+    host.dispatchEvent(new CustomEvent(type, { detail: { id: prop.id, label: prop.label, rect } }));
+  }
+
+  /** 点了电视：镜头飞到屏幕正前方，到了以后通知外面开始播放。 */
+  function watchScreen(prop: ScreenProp): void {
+    if (watch && !watch.leaving) return;
+    dog?.closeChat();
+    releasePointer();
+    const pose = watchPose(prop, camera.fov, camera.aspect);
+    watch = { prop, fromPosition: camera.position.clone(), fromQuaternion: camera.quaternion.clone(), toPosition: pose.position, toQuaternion: pose.quaternion, start: performance.now(), leaving: false, arrived: false };
+    if (reducedMotion.matches) watch.start -= WATCH_FLIGHT_MS;
+    prop.setWatching?.(true);
+    surface.style.cursor = '';
+    dirty = true; schedule();
+  }
+
+  function leaveScreen(): void {
+    if (!watch || watch.leaving) return;
+    const prop = watch.prop;
+    const home = new THREE.Quaternion().setFromEuler(new THREE.Euler(startRotation.x + pitch, startRotation.y + yaw, 0, 'YXZ'));
+    watch = { prop, fromPosition: camera.position.clone(), fromQuaternion: camera.quaternion.clone(), toPosition: homePosition.clone(), toQuaternion: home, start: performance.now(), leaving: true, arrived: false };
+    if (reducedMotion.matches) watch.start -= WATCH_FLIGHT_MS;
+    prop.setWatching?.(false);
+    host.dispatchEvent(new CustomEvent('ambient-screen-leave', { detail: { id: prop.id } }));
+    dirty = true; schedule();
+  }
+
+  /** 每帧推进镜头飞行；返回镜头是否还在动。 */
+  function flyCamera(now: number): boolean {
+    if (!watch) return false;
+    const raw = Math.min(1, Math.max(0, (now - watch.start) / WATCH_FLIGHT_MS));
+    const k = raw * raw * (3 - 2 * raw);
+    camera.position.lerpVectors(watch.fromPosition, watch.toPosition, k);
+    camera.quaternion.slerpQuaternions(watch.fromQuaternion, watch.toQuaternion, k);
+    if (raw < 1) return true;
+    if (watch.leaving) { camera.position.copy(homePosition); watch = undefined; }
+    else if (!watch.arrived) { watch.arrived = true; emitScreen('ambient-screen-watch', watch.prop); }
+    return false;
+  }
 
   function collect(root: THREE.Object3D): void {
     root.traverse(object => {
@@ -193,12 +259,15 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
       const turns = Math.round(yaw / (Math.PI * 2)) * Math.PI * 2;
       yaw -= turns; targetYaw -= turns;
     }
-    rotation.set(startRotation.x + pitch, startRotation.y + yaw, 0, 'YXZ');
-    camera.quaternion.setFromEuler(rotation);
+    const flying = flyCamera(now);
+    if (!watch) {
+      rotation.set(startRotation.x + pitch, startRotation.y + yaw, 0, 'YXZ');
+      camera.quaternion.setFromEuler(rotation);
+    }
     const zooming = Math.abs(camera.fov - targetFov) > .01;
     if (zooming) { camera.fov += (targetFov - camera.fov) * speed; camera.updateProjectionMatrix(); }
     dog?.update(dt);
-    const moving = rotating || zooming || Boolean(dog?.isActive());
+    const moving = rotating || zooming || flying || Boolean(dog?.isActive());
     const animate = Boolean(animateKitten) && !reducedMotion.matches;
     if (animate) {
       if (animationTick) animationTime += Math.min((now - animationTick) / 1000, .1);
@@ -237,6 +306,12 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
     camera.updateProjectionMatrix();
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setSize(width, height, false);
+    if (watch?.arrived && !watch.leaving) {
+      const pose = watchPose(watch.prop, camera.fov, camera.aspect);
+      watch.toPosition.copy(pose.position); watch.toQuaternion.copy(pose.quaternion);
+      camera.position.copy(pose.position); camera.quaternion.copy(pose.quaternion);
+      emitScreen('ambient-screen-rect', watch.prop);
+    }
     dirty = true; schedule();
   }
 
@@ -246,6 +321,7 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
 
   function pointerDown(event: PointerEvent): void {
     if (!active || disposed || pointer !== undefined || !event.isPrimary || event.button !== 0 || !allowedTarget(event.target)) return;
+    if (watch) return; // 看电视时镜头固定
     pointer = event.pointerId; pointerX = pressX = event.clientX; pointerY = pressY = event.clientY;wasDrag=false;
     try { surface.setPointerCapture(pointer); } catch { /* Drag still works while the pointer remains over the surface. */ }
     surface.dataset.dragging = 'true';
@@ -261,6 +337,11 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
   }
 
   function pointerMove(event: PointerEvent): void {
+    if (pointer === undefined && active && !watch && screens.length && event.pointerType === 'mouse') {
+      // 鼠标移到电视上时变成小手，提示可以点。
+      surface.style.cursor = pickScreen(screens, rayFrom(event)) ? 'pointer' : '';
+      return;
+    }
     if (event.pointerId !== pointer || !active) return;
     if(Math.hypot(event.clientX-pressX,event.clientY-pressY)>7)wasDrag=true;
     // One screen-width swipe turns about 180 degrees on both phones and desktops.
@@ -271,6 +352,10 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
   }
 
   function pointerEnd(event: PointerEvent): void {
+    if (event.type === 'pointerup' && event.pointerId === pointer && !wasDrag && Math.hypot(event.clientX - pressX, event.clientY - pressY) <= 7 && active && !watch && screens.length) {
+      const prop = pickScreen(screens, rayFrom(event));
+      if (prop) { releasePointer(); watchScreen(prop); return; }
+    }
     if(event.type==='pointerup'&&event.pointerId===pointer&&!wasDrag&&Math.hypot(event.clientX-pressX,event.clientY-pressY)<=7&&active&&companionObject){
       const rect=host.getBoundingClientRect(),ray=new THREE.Raycaster();camera.updateMatrixWorld(true);companionObject.updateMatrixWorld(true);
       ray.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,1-(event.clientY-rect.top)/rect.height*2),camera);
@@ -281,6 +366,7 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
 
   function keyDown(event: KeyboardEvent): void {
     if (!active || disposed || event.altKey || event.ctrlKey || event.metaKey || !allowedTarget(event.target)) return;
+    if (watch) { if (event.key === 'Home') { leaveScreen(); event.preventDefault(); } return; }
     switch (event.key) {
       case 'ArrowLeft': changeView(Math.PI / 9, 0); break;
       case 'ArrowRight': changeView(-Math.PI / 9, 0); break;
@@ -294,6 +380,7 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
 
   function resetView(): void {
     if (disposed) return;
+    if (watch) { leaveScreen(); return; }
     dog?.closeChat();
     releasePointer();
     targetFov = host.clientWidth < host.clientHeight ? 70 : 54;
@@ -459,9 +546,23 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
         }
         kittenMixer!.update(Math.max(0, Math.min(time - previousTime, .1)));
         previousTime = time;
+        signalTv?.update(time);
         renderer!.shadowMap.needsUpdate = true;
       };
       renderer.shadowMap.needsUpdate = true;
+      // 信号接收锅 + 电视机（Blender 生成）。单独加载，失败也不影响月面场景本身。
+      let signalTv: SignalTv | undefined;
+      void loadSignalTv({ ground: model, signal: abort.signal, collect, maxAnisotropy: renderer.capabilities.getMaxAnisotropy(), camera: camera.position })
+        .then(result => {
+          if (disposed || abort.signal.aborted) return;
+          scene.add(result.root);
+          if (reducedMotion.matches) result.settle(); else signalTv = result;
+          screens.push(result.prop);
+          host.dispatchEvent(new CustomEvent('ambient-screens', { detail: { labels: screens.map(prop => prop.label) } }));
+          renderer!.shadowMap.needsUpdate = true;
+          dirty = true; schedule();
+        })
+        .catch(() => { /* 摆件缺失时月面场景照常显示 */ });
     } else {
     scene.add(new THREE.HemisphereLight('#e8f2ff', '#b79a75', 1.7));
     const daylight = new THREE.DirectionalLight('#fff2d9', 2.4);
@@ -618,7 +719,7 @@ export async function createWindowViewport(host: HTMLElement, surface: HTMLEleme
     surface.addEventListener('keydown', keyDown);
     loaded = true; host.dataset.viewportState = 'ready';
     resize();
-    return { resume, pause, resetView, reactToReply, greet, greetDog: () => active && !disposed && !!dog?.greet(), talkDog: () => active && !disposed && !!dog?.talk(), dispose };
+    return { resume, pause, resetView, reactToReply, greet, leaveScreen, greetDog: () => active && !disposed && !!dog?.greet(), talkDog: () => active && !disposed && !!dog?.talk(), dispose };
   } catch (error) {
     if (!disposed) host.dataset.viewportState = 'error';
     dispose();

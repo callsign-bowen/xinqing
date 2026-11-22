@@ -995,6 +995,7 @@ export const chatSessionsFeature = {
               showCrisisPanelByRisk(result.riskLevel);
               ctx.events.emit('chat.risk', { level: result.riskLevel });
               if (message && result.riskLevel !== 'high') ctx.events.emit('chat.userSaid', { text: message });
+              if (result.riskLevel !== 'high') ctx.events.emit('chat.roundDelivered', { sessionId: delivered.id });
               if (result.riskLevel === 'high') {
                 showHighRiskSignal();
                 if (!autoSootheShown) { autoSootheShown = true; openSoothingExercise(); }

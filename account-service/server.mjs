@@ -13,6 +13,7 @@ import { cleanHistory } from './chat-context.mjs'
 import { prepareCompletionMessages } from './completion-messages.mjs'
 import { createCompletionDiagnostic } from './completion-diagnostics.mjs'
 import { NATURAL_DIALOGUE } from './dialogue-style.mjs'
+import { cleanTheaterHistory, extractJson, normalizeTheaterScript, theaterMessages } from './theater.mjs'
 
 /** 本地开发：允许把密钥放在 account-service/.env，不必每次手写环境变量。 */
 function loadLocalEnv() {
@@ -642,8 +643,8 @@ async function deepseekReplyStream(message, level, history, userId, image, conte
   return text
 }
 
-async function deepseekComplete(messages, temperature, maxTokens, signal) {
-  const diagnostic = createCompletionDiagnostic(AI_TIMEOUT_MS)
+async function deepseekComplete(messages, temperature, maxTokens, signal, timeoutMs = AI_TIMEOUT_MS) {
+  const diagnostic = createCompletionDiagnostic(timeoutMs)
   try {
     const base = AI_BASE_URL.replace(/\/$/, '')
     const options = {
@@ -658,7 +659,7 @@ async function deepseekComplete(messages, temperature, maxTokens, signal) {
         max_tokens: Math.min(1200, Math.max(100, Number(maxTokens) || 700)),
         messages
       }),
-      signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(AI_TIMEOUT_MS)]) : AbortSignal.timeout(AI_TIMEOUT_MS)
+      signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(timeoutMs)]) : AbortSignal.timeout(timeoutMs)
     }
     diagnostic.messages(messages)
     diagnostic.fetchStarted()
@@ -863,6 +864,47 @@ async function handleApi(req, res, url) {
         event: 'deepseek_failed',
         reason: aiFailureReason(error)
       }))
+      sendError(res, 502, 'AI 暂时连接失败，请稍后重试')
+    } finally {
+      res.off('close', cancel)
+    }
+    return
+  }
+
+  // 演绎系统：把这段对话里讲到的人际场景整理成木偶默剧剧本。前端在后台调用，用户点开才看。
+  if (req.method === 'POST' && url.pathname === '/api/theater/script') {
+    if (tooManyAttempts(`theater:${clientIp(req)}`, 60)) {
+      sendError(res, 429, '请求太频繁了，请稍后再试')
+      return
+    }
+    let body
+    try { body = await readBody(req) } catch (error) {
+      sendError(res, error.status || 400, error.message || '请求格式不正确')
+      return
+    }
+    const history = cleanTheaterHistory(body.history)
+    if (!history.some(item => item.role === 'user')) {
+      sendError(res, 400, '缺少对话内容')
+      return
+    }
+    // 高风险对话不排演，只走安全回复。
+    if (history.some(item => item.role === 'user' && riskOf(item.text) === 'high')) {
+      send(res, 200, { script: null, skipped: 'risk' })
+      return
+    }
+    if (!AI_API_KEY) {
+      sendError(res, 503, 'AI 尚未配置，请联系服务管理员')
+      return
+    }
+    const controller = new AbortController()
+    const cancel = () => { if (!res.writableEnded) controller.abort() }
+    res.once('close', cancel)
+    try {
+      const raw = await deepseekComplete(theaterMessages(history, body.previous), 0.4, 1200, controller.signal, AI_STREAM_TIMEOUT_MS)
+      send(res, 200, { script: normalizeTheaterScript(extractJson(raw)) })
+    } catch (error) {
+      if (controller.signal.aborted) return
+      console.error(JSON.stringify({ event: 'theater_failed', reason: aiFailureReason(error) }))
       sendError(res, 502, 'AI 暂时连接失败，请稍后重试')
     } finally {
       res.off('close', cancel)
